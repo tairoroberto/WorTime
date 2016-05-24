@@ -203,7 +203,7 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
                 Registro registro = new Registro(1, DateUtil.getDataHoje(),DateUtil.getDataHoje(),"almoço","2016-05-21-almoco","Observações teste tairo");
                 registroDAO = new RegistroDAO(getActivity());
                 registroDAO.insert(registro);
-                mList = registroDAO.getAll();
+                mList = registroDAO.getByDate(DateUtil.getDateToString(DateUtil.getDataHoje()));
                 adapter = new RegistroAdapter(getActivity(), mList);
                 mRecyclerView.setAdapter(adapter);
 
