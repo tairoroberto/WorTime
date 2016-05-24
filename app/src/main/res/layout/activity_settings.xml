@@ -15,11 +15,149 @@
         android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
-
-    <RelativeLayout
-        android:id="@+id/rl_fragment_container"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="2">
 
+        <ScrollView
+            android:id="@+id/scroll_settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edtEmpresa"
+                    android:hint="@string/txtEmpresa"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime"
+                    android:ems="10"
+                    android:id="@+id/edtEntrada"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:hint="@string/edt_entrada"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime"
+                    android:ems="10"
+                    android:id="@+id/edtAlmoco"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:hint="@string/edt_almoco"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime"
+                    android:ems="10"
+                    android:id="@+id/edtAlmocoRetorno"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:hint="@string/edt_almoco_retorno"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime"
+                    android:ems="10"
+                    android:id="@+id/edtSaida"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:hint="@string/edt_saida"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:ems="10"
+                    android:id="@+id/edtEmail"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:hint="@string/edt_email"/>
+
+                <View
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"/>
+
+                <RadioGroup
+                    android:id="@+id/rdg_senha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rd_senha_sim"
+                        android:id="@+id/rd_senha_sim"
+                        android:textColor="@color/colorPrimary"
+                        android:checked="true"
+                        android:layout_marginRight="32dp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rd_senha_nao"
+                        android:id="@+id/rd_senha_nao"
+                        android:textColor="@color/colorPrimary" />
+                </RadioGroup>
+
+                <View
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"/>
+
+                <RadioGroup
+                    android:id="@+id/rdg_notificacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rd_notificacao_sim"
+                        android:id="@+id/rd_notificacao_sim"
+                        android:textColor="@color/colorPrimary"
+                        android:checked="true"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rd_notificacao_nao"
+                        android:id="@+id/rd_notificacao_nao"
+                        android:textColor="@color/colorPrimary" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnSalvarConfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_salvar_config"
+        android:elevation="4dp" />
 </LinearLayout>
 
