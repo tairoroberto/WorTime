@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import java.util.List;
 
 import br.com.trmasolucoes.worktime.R;
@@ -43,6 +46,13 @@ public class RegistroAdapter extends RecyclerView.Adapter<RegistroAdapter.ViewHo
 
         Registro registro = mList.get(position);
         myViewHolder.txtHorario.setText(DateUtil.getDateToString(registro.getData()));
+
+        try{
+            YoYo.with(Techniques.BounceIn)
+                    .duration(700)
+                    .playOn(myViewHolder.itemView);
+        }
+        catch(Exception e){}
 
     }
 

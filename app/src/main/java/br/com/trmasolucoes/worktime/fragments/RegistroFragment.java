@@ -1,6 +1,8 @@
 package br.com.trmasolucoes.worktime.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.location.SettingInjectorService;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.trmasolucoes.worktime.R;
+import br.com.trmasolucoes.worktime.RelatorioActivity;
+import br.com.trmasolucoes.worktime.SettingsActivity;
 import br.com.trmasolucoes.worktime.adapters.RegistroAdapter;
 import br.com.trmasolucoes.worktime.database.RegistroDAO;
 import br.com.trmasolucoes.worktime.domain.Registro;
@@ -79,7 +83,7 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
             public void onRefresh() {
                 // Refresh items
                 registroDAO = new RegistroDAO(getActivity());
-                mList = registroDAO.getAll();
+                mList = registroDAO.getByDate(DateUtil.getDateToString(DateUtil.getDataHoje()));
                 adapter = new RegistroAdapter(getActivity(), mList);
                 mRecyclerView.setAdapter(adapter);
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -190,6 +194,7 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
 
     @Override
     public void onClick(View v) {
+        Intent intent;
 
         switch( v.getId() ){
             case R.id.fab_registrar:
@@ -205,9 +210,14 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
                 break;
             case R.id.fab_relatorios:
                 Toast.makeText(getActivity(), "Relatórios", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getActivity(), RelatorioActivity.class);
+                startActivity(intent);
                 break;
             case R.id.fab_settings:
                 Toast.makeText(getActivity(), "Configurações", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent);
+
                 break;
             //case R.id.fab_hoje:
             //    Toast.makeText(getActivity(), "Hoje", Toast.LENGTH_SHORT).show();
