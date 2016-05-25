@@ -1,20 +1,24 @@
 <resources>
     <string name="app_name">Work Time</string>
     <string name="action_settings">Configurações</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_settings">Configurações</string>
     <string name="title_activity_relatorio">Relatórios</string>
 
     <!-- Tele configurações-->
     <string name="txtEmpresa">* Empresa</string>
     <string name="btn_salvar_config" >Salvar</string>
-    <string name="edt_entrada" >* Entrada</string>
-    <string name="edt_almoco" >* Almoço</string>
-    <string name="edt_almoco_retorno" >* Retorno do Almoço</string>
-    <string name="edt_saida" >* Saída</string>
     <string name="edt_email">* E-mail</string>
     <string name="rd_senha_sim">Habilitar Senha</string>
     <string name="rd_senha_nao">Desabilitar Senha</string>
     <string name="rd_notificacao_sim">Habilitar Notificação</string>
     <string name="rd_notificacao_nao">Desabilitar Notificação</string>
+    <string name="seg">Seg</string>
+    <string name="ter">Ter</string>
+    <string name="qua">Qua</string>
+    <string name="qui">Qui</string>
+    <string name="sex">Sex</string>
+    <string name="sab">Sab</string>
+    <string name="dom">Dom</string>
+    <string name="txt_hora_vazia">--:--</string>
+    <string name="txt_total">Total</string>
 </resources>
