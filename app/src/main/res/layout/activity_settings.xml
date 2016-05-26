@@ -67,25 +67,29 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSegAlmoco"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSegAlmocoRetorno"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSegSaida"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSegTotal"
                         android:layout_width="60dp"
@@ -114,25 +118,29 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnTerAlmoco"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnTerAlmocoRetorno"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnTerSaida"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnTerTotal"
                         android:layout_width="60dp"
@@ -161,25 +169,29 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnQuaAlmoco"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnQuaAlmocoRetorno"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnQuaSaida"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnQuaTotal"
                         android:layout_width="60dp"
@@ -208,25 +220,29 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnQuiAlmoco"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnQuiAlmocoRetorno"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnQuiSaida"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnQuiTotal"
                         android:layout_width="60dp"
@@ -254,25 +270,29 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSexAlmoco"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSexAlmocoRetorno"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSexSaida"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSexTotal"
                         android:layout_width="60dp"
@@ -301,25 +321,29 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSabAlmoco"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSabAlmocoRetorno"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSabSaida"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnSabTotal"
                         android:layout_width="60dp"
@@ -347,25 +371,29 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnDomAlmoco"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnDomAlmocoRetorno"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnDomSaida"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="99:99" />
+                        android:hint="@string/txt_hora_vazia"
+                        android:onClick="selecionarHorario" />
                     <Button
                         android:id="@+id/btnDomTotal"
                         android:layout_width="60dp"
