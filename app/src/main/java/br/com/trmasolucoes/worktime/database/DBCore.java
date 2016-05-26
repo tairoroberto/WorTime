@@ -23,29 +23,30 @@ public class DBCore extends SQLiteOpenHelper {
                 + "horario text not null,"
                 + "tipo text not null,"
                 + "foto text,"
-                + "observacao text,"
-                + "id_empresa integer not null);");
+                + "observacao text );");
 
 
-        db.execSQL("create table empresa("
+        db.execSQL("create table horarios("
                 + "_id integer primary key autoincrement,"
-                + "nome text not null,"
-                + "entrada text not null,"
-                + "almoco text not null,"
-                + "retorno_almoco text not null,"
-                + "saida text not null);");
+                + "dia_semana text not null,"
+                + "entrada text ,"
+                + "almoco text ,"
+                + "almoco_retorno text ,"
+                + "saida text );");
 
-        db.execSQL("create table settings("
+        db.execSQL("create table configuracoes("
                 + "_id integer primary key autoincrement,"
-                + "nome text not null,"
-                + "valor text not null);");
+                + "empresa text not null,"
+                + "email text not null,"
+                + "senha text not null,"
+                + "notificação text not null);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table registros");
-        db.execSQL("drop table empresa");
-        db.execSQL("drop table settings");
+        db.execSQL("drop table horarios");
+        db.execSQL("drop table configuracoes");
         onCreate(db);
     }
 }

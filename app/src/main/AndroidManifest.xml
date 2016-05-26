@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ConfiguracaoActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".MainActivity"/>
         <activity

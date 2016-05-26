@@ -2,13 +2,11 @@ package br.com.trmasolucoes.worktime.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.SettingInjectorService;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,7 +22,7 @@ import java.util.List;
 
 import br.com.trmasolucoes.worktime.R;
 import br.com.trmasolucoes.worktime.RelatorioActivity;
-import br.com.trmasolucoes.worktime.SettingsActivity;
+import br.com.trmasolucoes.worktime.ConfiguracaoActivity;
 import br.com.trmasolucoes.worktime.adapters.RegistroAdapter;
 import br.com.trmasolucoes.worktime.database.RegistroDAO;
 import br.com.trmasolucoes.worktime.domain.Registro;
@@ -215,7 +213,7 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
                 break;
             case R.id.fab_settings:
                 Toast.makeText(getActivity(), "Configurações", Toast.LENGTH_SHORT).show();
-                intent = new Intent(getActivity(), SettingsActivity.class);
+                intent = new Intent(getActivity(), ConfiguracaoActivity.class);
                 startActivity(intent);
 
                 break;

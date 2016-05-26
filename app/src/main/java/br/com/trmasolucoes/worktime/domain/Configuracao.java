@@ -8,29 +8,37 @@ import android.os.Parcelable;
  */
 public class Configuracao implements Parcelable{
     private long id;
-    private String nome;
-    private String valor;
+    private String empresa;
+    private String email;
+    private String senha;
+    private String notificacao;
 
     public Configuracao() {
     }
 
-    public Configuracao(long id, String nome, String valor) {
+    public Configuracao(long id, String empresa, String email, String senha, String notificacao) {
         this.id = id;
-        this.nome = nome;
-        this.valor = valor;
+        this.empresa = empresa;
+        this.email = email;
+        this.senha = senha;
+        this.notificacao = notificacao;
     }
 
     protected Configuracao(Parcel in) {
         id = in.readLong();
-        nome = in.readString();
-        valor = in.readString();
+        empresa = in.readString();
+        email = in.readString();
+        senha = in.readString();
+        notificacao = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
-        dest.writeString(nome);
-        dest.writeString(valor);
+        dest.writeString(empresa);
+        dest.writeString(email);
+        dest.writeString(senha);
+        dest.writeString(notificacao);
     }
 
     @Override
@@ -58,19 +66,35 @@ public class Configuracao implements Parcelable{
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getEmpresa() {
+        return empresa;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
     }
 
-    public String getValor() {
-        return valor;
+    public String getEmail() {
+        return email;
     }
 
-    public void setValor(String valor) {
-        this.valor = valor;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getNotificacao() {
+        return notificacao;
+    }
+
+    public void setNotificacao(String notificacao) {
+        this.notificacao = notificacao;
     }
 }

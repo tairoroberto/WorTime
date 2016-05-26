@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/grey"
     android:orientation="vertical"
-    tools:context=".RelatorioActivity">
+    tools:context=".RelatorioActivity  ">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
