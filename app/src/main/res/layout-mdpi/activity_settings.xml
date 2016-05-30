@@ -176,7 +176,7 @@
                         android:hint="@string/txt_hora_vazia" />
                     <Button
                         android:id="@+id/btnQuaSaida"
-                        android:layout_width="60dp"
+                        android:layout_width="55dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="@string/txt_hora_vazia" />

@@ -27,8 +27,8 @@ public class ConfiguracaoDAO {
         ContentValues values = new ContentValues();
         values.put("empresa", configuracao.getEmpresa());
         values.put("email", configuracao.getEmail());
-        values.put("senha", configuracao.getSenha());
-        values.put("notificação", configuracao.getNotificacao());
+        values.put("senha", String.valueOf(configuracao.getSenha()));
+        values.put("notificação", String.valueOf(configuracao.getNotificacao()));
 
         db.insert("configuracoes", null, values);
     }
@@ -38,8 +38,8 @@ public class ConfiguracaoDAO {
         ContentValues values = new ContentValues();
         values.put("empresa", configuracao.getEmpresa());
         values.put("email", configuracao.getEmail());
-        values.put("senha", configuracao.getSenha());
-        values.put("notificação", configuracao.getNotificacao());
+        values.put("senha", String.valueOf(configuracao.getSenha()));
+        values.put("notificação", String.valueOf(configuracao.getNotificacao()));
 
         db.update("configuracoes", values, "_id = ?", new String[]{"" + configuracao.getId()});
     }
@@ -65,8 +65,8 @@ public class ConfiguracaoDAO {
                 configuracao.setId(cursor.getLong(0));
                 configuracao.setEmpresa(cursor.getString(1));
                 configuracao.setEmail(cursor.getString(2));
-                configuracao.setSenha(cursor.getString(3));
-                configuracao.setNotificacao(cursor.getString(4));
+                configuracao.setSenha(Boolean.parseBoolean(cursor.getString(3)));
+                configuracao.setNotificacao(Boolean.parseBoolean(cursor.getString(4)));
 
                 list.add(configuracao);
             } while (cursor.moveToNext());
@@ -88,8 +88,8 @@ public class ConfiguracaoDAO {
             configuracao.setId(cursor.getLong(0));
             configuracao.setEmpresa(cursor.getString(1));
             configuracao.setEmail(cursor.getString(2));
-            configuracao.setSenha(cursor.getString(3));
-            configuracao.setNotificacao(cursor.getString(4));
+            configuracao.setSenha(Boolean.parseBoolean(cursor.getString(3)));
+            configuracao.setNotificacao(Boolean.parseBoolean(cursor.getString(4)));
 
             cursor.close();
             return configuracao;
@@ -116,8 +116,8 @@ public class ConfiguracaoDAO {
                 configuracao.setId(cursor.getLong(0));
                 configuracao.setEmpresa(cursor.getString(1));
                 configuracao.setEmail(cursor.getString(2));
-                configuracao.setSenha(cursor.getString(3));
-                configuracao.setNotificacao(cursor.getString(4));
+                configuracao.setSenha(Boolean.parseBoolean(cursor.getString(3)));
+                configuracao.setNotificacao(Boolean.parseBoolean(cursor.getString(4)));
 
                 list.add(configuracao);
             } while (cursor.moveToNext());

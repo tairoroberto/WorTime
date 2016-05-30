@@ -11,7 +11,6 @@ import java.util.Date;
 public class Horario implements Parcelable{
     private long id;
     private String diaSemana;
-    private String nome;
     private String entrada;
     private String almoco;
     private String almocoRetorno;
@@ -21,10 +20,17 @@ public class Horario implements Parcelable{
     public Horario() {
     }
 
-    public Horario(long id, String diaSemana, String nome, String entrada, String almoco, String almocoRetorno, String saida) {
+    public Horario(long id, String diaSemana, String entrada, String almoco, String almocoRetorno, String saida) {
         this.id = id;
-        this.nome = diaSemana;
-        this.nome = nome;
+        this.diaSemana = diaSemana;
+        this.entrada = entrada;
+        this.almoco = almoco;
+        this.almocoRetorno = almocoRetorno;
+        this.saida = saida;
+    }
+
+    public Horario(String diaSemana, String entrada, String almoco, String almocoRetorno, String saida) {
+        this.diaSemana = diaSemana;
         this.entrada = entrada;
         this.almoco = almoco;
         this.almocoRetorno = almocoRetorno;
@@ -34,7 +40,6 @@ public class Horario implements Parcelable{
     protected Horario(Parcel in) {
         id = in.readLong();
         diaSemana = in.readString();
-        nome = in.readString();
         entrada = in.readString();
         almoco = in.readString();
         almocoRetorno = in.readString();
@@ -67,14 +72,6 @@ public class Horario implements Parcelable{
 
     public void setDiaSemana(String diaSemana) {
         this.diaSemana = diaSemana;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getEntrada() {
@@ -118,7 +115,6 @@ public class Horario implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
         dest.writeString(diaSemana);
-        dest.writeString(nome);
         dest.writeString(entrada);
         dest.writeString(almoco);
         dest.writeString(almocoRetorno);

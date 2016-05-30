@@ -48,20 +48,28 @@ public class HorarioDAO {
 
     public void updateByWeekDay(Horario horario, String campo, String hora) {
         Horario h = this.getByWeekDay(horario.getDiaSemana(), campo, hora);
-        if (h.getDiaSemana() == null) {
-            this.insert(horario);
 
-        }else {
-
-            ContentValues values = new ContentValues();
-            values.put("dia_semana", horario.getDiaSemana());
-            values.put("entrada", horario.getEntrada());
-            values.put("almoco", horario.getAlmoco());
-            values.put("almoco_retorno", horario.getAlmocoRetorno());
-            values.put("saida", horario.getSaida());
-
-            db.update("horarios", values, "dia_semana = ? and "+campo+" = ?", new String[]{horario.getDiaSemana(), hora});
+        if (horario.getEntrada() == null){
+            horario.setEntrada(h.getEntrada());
         }
+        if (horario.getAlmoco() == null){
+            horario.setAlmoco(h.getAlmoco());
+        }
+        if (horario.getAlmocoRetorno() == null){
+            horario.setAlmocoRetorno(h.getAlmocoRetorno());
+        }
+        if (horario.getSaida() == null){
+            horario.setSaida(h.getSaida());
+        }
+
+        ContentValues values = new ContentValues();
+        values.put("dia_semana", horario.getDiaSemana());
+        values.put("entrada", horario.getEntrada());
+        values.put("almoco", horario.getAlmoco());
+        values.put("almoco_retorno", horario.getAlmocoRetorno());
+        values.put("saida", horario.getSaida());
+
+        db.update("horarios", values, "dia_semana = ? ", new String[]{horario.getDiaSemana()});
     }
 
 
@@ -123,11 +131,19 @@ public class HorarioDAO {
 
     public Horario getByWeekDay(String day, String campo, String hora) {
         Horario horario = new Horario();
-
+        String where = null;
         String[] columns = {"_id","dia_semana","entrada","almoco","almoco_retorno","saida"};
-        String where = "dia_semana = ? and "+campo+" = ?";
+        String[] selectionArgs;// = new String[]{day, hora};
 
-        Cursor cursor = db.query("horarios", columns, where, new String[]{day, hora}, null, null, null);
+        if (!hora.equals("")){
+            where = "dia_semana = ? and "+campo+" = ?";
+            selectionArgs = new String[]{day, hora};
+        }else {
+            where = "dia_semana = ? ";
+            selectionArgs = new String[]{day};
+        }
+
+        Cursor cursor = db.query("horarios", columns, where, selectionArgs, null, null, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
 
@@ -150,9 +166,10 @@ public class HorarioDAO {
         ArrayList<Horario> list = new ArrayList<>();
 
         String[] columns = {"_id","dia_semana","entrada","almoco","almoco_retorno","saida"};
-        String where = "data = ?";
+        String where = "dia_semana = ?";
+        String groupBy = "dia_semana";
 
-        Cursor cursor = db.query("horarios", columns, where, new String[]{dia}, null, null, null);
+        Cursor cursor = db.query("horarios", columns, where, new String[]{dia}, groupBy, null, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
 

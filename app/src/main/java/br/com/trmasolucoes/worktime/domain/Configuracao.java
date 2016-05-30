@@ -10,13 +10,13 @@ public class Configuracao implements Parcelable{
     private long id;
     private String empresa;
     private String email;
-    private String senha;
-    private String notificacao;
+    private Boolean senha;
+    private Boolean notificacao;
 
     public Configuracao() {
     }
 
-    public Configuracao(long id, String empresa, String email, String senha, String notificacao) {
+    public Configuracao(long id, String empresa, String email, Boolean senha, Boolean notificacao) {
         this.id = id;
         this.empresa = empresa;
         this.email = email;
@@ -28,8 +28,8 @@ public class Configuracao implements Parcelable{
         id = in.readLong();
         empresa = in.readString();
         email = in.readString();
-        senha = in.readString();
-        notificacao = in.readString();
+        senha = in.readInt() != 0;
+        notificacao = in.readInt() != 0;
     }
 
     @Override
@@ -37,8 +37,8 @@ public class Configuracao implements Parcelable{
         dest.writeLong(id);
         dest.writeString(empresa);
         dest.writeString(email);
-        dest.writeString(senha);
-        dest.writeString(notificacao);
+        dest.writeInt(senha ? 1 : 0);
+        dest.writeInt(notificacao ? 1 : 0);
     }
 
     @Override
@@ -82,19 +82,19 @@ public class Configuracao implements Parcelable{
         this.email = email;
     }
 
-    public String getSenha() {
+    public Boolean getSenha() {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    public void setSenha(Boolean senha) {
         this.senha = senha;
     }
 
-    public String getNotificacao() {
+    public Boolean getNotificacao() {
         return notificacao;
     }
 
-    public void setNotificacao(String notificacao) {
+    public void setNotificacao(Boolean notificacao) {
         this.notificacao = notificacao;
     }
 }
