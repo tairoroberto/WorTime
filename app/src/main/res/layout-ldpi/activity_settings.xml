@@ -157,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="99:99"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:text="@string/txt_total"
                         android:textSize="8sp" />
 
@@ -213,7 +213,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="99:99"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:text="@string/txt_total"
                         android:textSize="8sp" />
 
@@ -269,7 +269,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="99:99"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:text="@string/txt_total"
                         android:textSize="8sp" />
                 </LinearLayout>
@@ -324,7 +324,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="99:99"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:text="@string/txt_total"
                         android:textSize="8sp" />
 
@@ -380,7 +380,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="99:99"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:text="@string/txt_total"
                         android:textSize="8sp" />
                 </LinearLayout>
@@ -435,7 +435,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="99:99"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:text="@string/txt_total"
                         android:textSize="8sp" />
                 </LinearLayout>

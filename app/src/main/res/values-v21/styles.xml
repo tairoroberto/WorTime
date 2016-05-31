@@ -31,12 +31,4 @@
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowContentTransitions">true</item>
     </style>
-
-    <style name="datepicker" parent="Base.V7.Theme.AppCompat.Dialog">
-        <item name="android:colorBackground">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorPrimary</item>
-        <item name="android:windowBackground">@color/grey</item>
-        <item name="android:colorForeground">@color/colorPrimaryDark</item>
-        <item name="colorControlNormal">?android:attr/textColorSecondary</item>
-    </style>
 </resources>

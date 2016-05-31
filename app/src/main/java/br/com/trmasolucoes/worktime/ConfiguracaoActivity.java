@@ -45,6 +45,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
     static ConfiguracaoDAO configuracaoDAO;
     Configuracao configuracao;
     private static final String TAG = "Script";
+    private TimePickerDialog timepicker;
+    private Calendar now;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,8 +143,6 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         /** Percorro os horarios e mostro na tela os totais */
         calcularTotais(horarioDAO.getAll());
 
-
-
         /** ENTRADA */
         btnSegEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,8 +153,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Seg");
                 bundle.putString("horario", "Entrada");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -181,8 +181,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Ter");
                 bundle.putString("horario", "Entrada");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -209,8 +209,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Qua");
                 bundle.putString("horario", "Entrada");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -237,8 +237,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Qui");
                 bundle.putString("horario", "Entrada");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -265,8 +265,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Sex");
                 bundle.putString("horario", "Entrada");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -293,8 +293,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Sab");
                 bundle.putString("horario", "Entrada");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -321,8 +321,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Dom");
                 bundle.putString("horario", "Entrada");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -350,8 +350,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Seg");
                 bundle.putString("horario", "Almoco");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -378,8 +378,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Ter");
                 bundle.putString("horario", "Almoco");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -406,8 +406,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Qua");
                 bundle.putString("horario", "Almoco");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -434,8 +434,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Qui");
                 bundle.putString("horario", "Almoco");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -462,8 +462,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Sex");
                 bundle.putString("horario", "Almoco");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -490,8 +490,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Sab");
                 bundle.putString("horario", "Almoco");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -518,8 +518,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Dom");
                 bundle.putString("horario", "Almoco");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -547,8 +547,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Seg");
                 bundle.putString("horario", "AlmocoRetorno");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -575,8 +575,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Ter");
                 bundle.putString("horario", "AlmocoRetorno");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -603,8 +603,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Qua");
                 bundle.putString("horario", "AlmocoRetorno");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -631,8 +631,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Qui");
                 bundle.putString("horario", "AlmocoRetorno");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -659,8 +659,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Sex");
                 bundle.putString("horario", "AlmocoRetorno");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -687,8 +687,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Sab");
                 bundle.putString("horario", "AlmocoRetorno");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -715,8 +715,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Dom");
                 bundle.putString("horario", "AlmocoRetorno");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -744,8 +744,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Seg");
                 bundle.putString("horario", "Saida");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -772,8 +772,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Ter");
                 bundle.putString("horario", "Saida");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -800,8 +800,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Qua");
                 bundle.putString("horario", "Saida");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -828,8 +828,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Qui");
                 bundle.putString("horario", "Saida");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -856,8 +856,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Sex");
                 bundle.putString("horario", "Saida");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -884,8 +884,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Sab");
                 bundle.putString("horario", "Saida");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -912,8 +912,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
                 bundle.putString("dia", "Dom");
                 bundle.putString("horario", "Saida");
 
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                now = Calendar.getInstance();
+                timepicker = TimePickerDialog.newInstance(
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -1171,5 +1171,19 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             /** Calcula o total e colocal no botão */
             ConfiguracaoActivity.calcularTotais(horarioDAO.getByDay(bundle.getString("dia")));
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        TimePickerDialog tpd = (TimePickerDialog) getFragmentManager().findFragmentByTag("TimepickerDialog");
+
+        if(tpd != null) tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+
+            }
+        });
     }
 }
