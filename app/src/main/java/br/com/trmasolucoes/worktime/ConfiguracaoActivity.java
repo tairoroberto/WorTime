@@ -1113,7 +1113,12 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         }
         DecimalFormat df = new DecimalFormat("0.00");
 
-         btn.setText(String.valueOf(df.format(total)));
+        if (total > 0){
+            btn.setText(String.valueOf(df.format(total)));
+        }else {
+            btn.setText(R.string.txt_total);
+        }
+
     }
 
     private static float getHorarioFloat(String horario){
