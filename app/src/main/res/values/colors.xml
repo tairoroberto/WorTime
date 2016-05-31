@@ -12,7 +12,7 @@
     <color name="colorDivider">#B6B6B6</color>
 
     <color name="grey">#ddd</color>
-    <color name="greyBackground">#cfd8dc</color>
+    <color name="timepickerBackground">#004d40</color>
     <color name="black">#000</color>
 
     <color name="colorFAB">#009688</color>

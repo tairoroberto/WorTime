@@ -1,18 +1,25 @@
 package br.com.trmasolucoes.worktime;
 
+import android.app.Activity;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.wdullaer.materialdatetimepicker.Utils;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -24,7 +31,7 @@ import br.com.trmasolucoes.worktime.domain.Configuracao;
 import br.com.trmasolucoes.worktime.domain.Horario;
 
 public class ConfiguracaoActivity extends AppCompatActivity {
-    private static Button btnSalvarConfig;
+    private Button btnSalvarConfig;
     private static Button btnSegEntrada, btnSegAlmoco, btnSegAlmocoRetorno, btnSegSaida, btnSegTotal;
     private static Button btnTerEntrada, btnTerAlmoco, btnTerAlmocoRetorno, btnTerSaida, btnTerTotal;
     private static Button btnQuaEntrada, btnQuaAlmoco, btnQuaAlmocoRetorno, btnQuaSaida, btnQuaTotal;
@@ -120,9 +127,8 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             horarioDAO.insert(horario);
             horario.setDiaSemana("Dom");
             horarioDAO.insert(horario);
-
-
         }
+
         //Insere as configurações padrões
         if (configuracaoDAO.getById(1).getEmpresa() == null){
             configuracao.setEmpresa("");
@@ -135,102 +141,202 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         /** Percorro os horarios e mostro na tela os totais */
         calcularTotais(horarioDAO.getAll());
 
+
+
         /** ENTRADA */
         btnSegEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSegTotal.getId());
                 bundle.putString("dia", "Seg");
                 bundle.putString("horario", "Entrada");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnTerEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnTerTotal.getId());
                 bundle.putString("dia", "Ter");
                 bundle.putString("horario", "Entrada");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnQuaEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnQuaTotal.getId());
                 bundle.putString("dia", "Qua");
                 bundle.putString("horario", "Entrada");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnQuiEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnQuiTotal.getId());
                 bundle.putString("dia", "Qui");
                 bundle.putString("horario", "Entrada");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnSexEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSexTotal.getId());
                 bundle.putString("dia", "Sex");
                 bundle.putString("horario", "Entrada");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnSabEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSabTotal.getId());
                 bundle.putString("dia", "Sab");
                 bundle.putString("horario", "Entrada");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnDomEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnDomTotal.getId());
                 bundle.putString("dia", "Dom");
                 bundle.putString("horario", "Entrada");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
@@ -238,98 +344,196 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         btnSegAlmoco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSegTotal.getId());
                 bundle.putString("dia", "Seg");
                 bundle.putString("horario", "Almoco");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnTerAlmoco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnTerTotal.getId());
                 bundle.putString("dia", "Ter");
                 bundle.putString("horario", "Almoco");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnQuaAlmoco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnQuaTotal.getId());
                 bundle.putString("dia", "Qua");
                 bundle.putString("horario", "Almoco");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnQuiAlmoco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnQuiTotal.getId());
                 bundle.putString("dia", "Qui");
                 bundle.putString("horario", "Almoco");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnSexAlmoco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSexTotal.getId());
                 bundle.putString("dia", "Sex");
                 bundle.putString("horario", "Almoco");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnSabAlmoco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSabTotal.getId());
                 bundle.putString("dia", "Sab");
                 bundle.putString("horario", "Almoco");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnDomAlmoco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnDomTotal.getId());
                 bundle.putString("dia", "Dom");
                 bundle.putString("horario", "Almoco");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
@@ -337,98 +541,196 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         btnSegAlmocoRetorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSegTotal.getId());
                 bundle.putString("dia", "Seg");
                 bundle.putString("horario", "AlmocoRetorno");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnTerAlmocoRetorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnTerTotal.getId());
                 bundle.putString("dia", "Ter");
                 bundle.putString("horario", "AlmocoRetorno");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnQuaAlmocoRetorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnQuaTotal.getId());
                 bundle.putString("dia", "Qua");
                 bundle.putString("horario", "AlmocoRetorno");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnQuiAlmocoRetorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnQuiTotal.getId());
                 bundle.putString("dia", "Qui");
                 bundle.putString("horario", "AlmocoRetorno");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnSexAlmocoRetorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSexTotal.getId());
                 bundle.putString("dia", "Sex");
                 bundle.putString("horario", "AlmocoRetorno");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnSabAlmocoRetorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSabTotal.getId());
                 bundle.putString("dia", "Sab");
                 bundle.putString("horario", "AlmocoRetorno");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnDomAlmocoRetorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnDomTotal.getId());
                 bundle.putString("dia", "Dom");
                 bundle.putString("horario", "AlmocoRetorno");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
@@ -436,110 +738,200 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         btnSegSaida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSegTotal.getId());
                 bundle.putString("dia", "Seg");
                 bundle.putString("horario", "Saida");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnTerSaida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnTerTotal.getId());
                 bundle.putString("dia", "Ter");
                 bundle.putString("horario", "Saida");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnQuaSaida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnQuaTotal.getId());
                 bundle.putString("dia", "Qua");
                 bundle.putString("horario", "Saida");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnQuiSaida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnQuiTotal.getId());
                 bundle.putString("dia", "Qui");
                 bundle.putString("horario", "Saida");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnSexSaida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSexTotal.getId());
                 bundle.putString("dia", "Sex");
                 bundle.putString("horario", "Saida");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnSabSaida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnSabTotal.getId());
                 bundle.putString("dia", "Sab");
                 bundle.putString("horario", "Saida");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
 
         btnDomSaida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePiker = new TimePickerFragment();
-                Bundle bundle = new Bundle();
+                final Bundle bundle = new Bundle();
                 bundle.putInt("view", v.getId());
                 bundle.putInt("view_total",btnDomTotal.getId());
                 bundle.putString("dia", "Dom");
                 bundle.putString("horario", "Saida");
-                datePiker.setArguments(bundle);
-                datePiker.show(getSupportFragmentManager(), "timePicker");
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog timepicker = TimePickerDialog.newInstance(
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                onTimeSetBundle(hourOfDay,minute,second,bundle);
+                            }
+                        },
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true
+                );
+                timepicker.vibrate(true);
+                timepicker.dismissOnPause(true);
+                timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+                timepicker.show(getFragmentManager(), "Timepickerdialog");
             }
         });
     }
 
-    /** Chama o dialog com o DatePicker os horarios */
-    public void selecionarHorario(View view){
-        DialogFragment datePiker = new TimePickerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("view", view.getId());
-        datePiker.setArguments(bundle);
-        datePiker.show(getSupportFragmentManager(), "timePicker");
-    }
 
     /** Inicializa todos os botões para serem usados na activity */
     public void inicializarViews(){
@@ -700,75 +1092,6 @@ public class ConfiguracaoActivity extends AppCompatActivity {
         }
     }
 
-    /** Mostra um data picker pata seleçoã de horário */
-    public static class TimePickerFragment extends DialogFragment
-            implements TimePickerDialog.OnTimeSetListener {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current time as the default values for the picker
-            final Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
-
-            // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), R.style.datepicker, this, hour, minute,
-                    DateFormat.is24HourFormat(getActivity()));
-        }
-
-        /** Pega o id da view enviada pelo getArguments() do fragment */
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            String hora, minuto;
-            minuto = (minute < 10)?"0"+minute:""+minute;
-            hora = (hourOfDay < 10)?"0"+hourOfDay:""+hourOfDay;
-
-            Toast.makeText(getActivity(), hora +":"+minuto, Toast.LENGTH_SHORT).show();
-            Bundle bundle = this.getArguments();
-            Button btn = (Button) getActivity().findViewById(bundle.getInt("view"));
-            Button btnTotal = (Button) getActivity().findViewById(bundle.getInt("view_total"));
-
-            Horario horario = new Horario();
-            horario.setDiaSemana(bundle.getString("dia"));
-            if (bundle.getString("horario") != null){
-                if (bundle.getString("horario").equalsIgnoreCase("Entrada")) {
-
-                    /** Insere no banco o horario selecionado */
-                    horario.setEntrada(hora +":"+minuto);
-                    horarioDAO.updateByWeekDay(horario,"entrada", btn.getText().toString());
-                    horario = horarioDAO.getByWeekDay(horario.getDiaSemana(),"entrada", horario.getEntrada());
-                    btn.setText(horario.getEntrada());
-
-                }else if (bundle.getString("horario").equalsIgnoreCase("Almoco")){
-
-                    /** Insere no banco o horario selecionado */
-                    horario.setAlmoco(hora +":"+minuto);
-                    horarioDAO.updateByWeekDay(horario, "almoco", btn.getText().toString());
-                    horario = horarioDAO.getByWeekDay(horario.getDiaSemana(),"almoco", horario.getAlmoco());
-                    btn.setText(horario.getAlmoco());
-
-                }else if (bundle.getString("horario").equalsIgnoreCase("AlmocoRetorno")){
-
-                    /** Insere no banco o horario selecionado */
-                    horario.setAlmocoRetorno(hora +":"+minuto);
-                    horarioDAO.updateByWeekDay(horario,"almoco_retorno", btn.getText().toString());
-                    horario = horarioDAO.getByWeekDay(horario.getDiaSemana(),"almoco_retorno", horario.getAlmocoRetorno());
-                    btn.setText(horario.getAlmocoRetorno());
-
-                }else if (bundle.getString("horario").equalsIgnoreCase("Saida")){
-
-                    /** Insere no banco o horario selecionado */
-                    horario.setSaida(hora +":"+minuto);
-                    horarioDAO.updateByWeekDay(horario,"saida", btn.getText().toString());
-                    horario = horarioDAO.getByWeekDay(horario.getDiaSemana(),"saida", horario.getSaida());
-                    btn.setText(horario.getSaida());
-                }
-
-                /** Calcula o total e colocal no botão */
-                ConfiguracaoActivity.calcularTotais(horarioDAO.getByDay(bundle.getString("dia")));
-            }
-        }
-    }
-
     public static void setHorario(Button btn, Horario horario){
         float entrada = getHorarioFloat(horario.getEntrada());
         float almoco = getHorarioFloat(horario.getAlmoco());
@@ -798,5 +1121,55 @@ public class ConfiguracaoActivity extends AppCompatActivity {
             return 0;
         }
         return Float.parseFloat(horario.replace(":","."));
+    }
+
+    public void onTimeSetBundle(int hourOfDay, int minute, int second, Bundle bundle) {
+        String hora, minuto;
+        minuto = (minute < 10)?"0"+minute:""+minute;
+        hora = (hourOfDay < 10)?"0"+hourOfDay:""+hourOfDay;
+
+        Toast.makeText(getBaseContext(), hora +":"+minuto, Toast.LENGTH_SHORT).show();
+        Button btn = (Button) findViewById(bundle.getInt("view"));
+        Button btnTotal = (Button) findViewById(bundle.getInt("view_total"));
+
+        Horario horario = new Horario();
+        horario.setDiaSemana(bundle.getString("dia"));
+        if (bundle.getString("horario") != null){
+            if (bundle.getString("horario").equalsIgnoreCase("Entrada")) {
+
+                /** Insere no banco o horario selecionado */
+                horario.setEntrada(hora +":"+minuto);
+                horarioDAO.updateByWeekDay(horario,"entrada", btn.getText().toString());
+                horario = horarioDAO.getByWeekDay(horario.getDiaSemana(),"entrada", horario.getEntrada());
+                btn.setText(horario.getEntrada());
+
+            }else if (bundle.getString("horario").equalsIgnoreCase("Almoco")){
+
+                /** Insere no banco o horario selecionado */
+                horario.setAlmoco(hora +":"+minuto);
+                horarioDAO.updateByWeekDay(horario, "almoco", btn.getText().toString());
+                horario = horarioDAO.getByWeekDay(horario.getDiaSemana(),"almoco", horario.getAlmoco());
+                btn.setText(horario.getAlmoco());
+
+            }else if (bundle.getString("horario").equalsIgnoreCase("AlmocoRetorno")){
+
+                /** Insere no banco o horario selecionado */
+                horario.setAlmocoRetorno(hora +":"+minuto);
+                horarioDAO.updateByWeekDay(horario,"almoco_retorno", btn.getText().toString());
+                horario = horarioDAO.getByWeekDay(horario.getDiaSemana(),"almoco_retorno", horario.getAlmocoRetorno());
+                btn.setText(horario.getAlmocoRetorno());
+
+            }else if (bundle.getString("horario").equalsIgnoreCase("Saida")){
+
+                /** Insere no banco o horario selecionado */
+                horario.setSaida(hora +":"+minuto);
+                horarioDAO.updateByWeekDay(horario,"saida", btn.getText().toString());
+                horario = horarioDAO.getByWeekDay(horario.getDiaSemana(),"saida", horario.getSaida());
+                btn.setText(horario.getSaida());
+            }
+
+            /** Calcula o total e colocal no botão */
+            ConfiguracaoActivity.calcularTotais(horarioDAO.getByDay(bundle.getString("dia")));
+        }
     }
 }

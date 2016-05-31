@@ -135,7 +135,7 @@ public class HorarioDAO {
         String[] columns = {"_id","dia_semana","entrada","almoco","almoco_retorno","saida"};
         String[] selectionArgs;// = new String[]{day, hora};
 
-        if (!hora.equals("")){
+        if (!hora.equals("") && !hora.equals("--:--")){
             where = "dia_semana = ? and "+campo+" = ?";
             selectionArgs = new String[]{day, hora};
         }else {
