@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Work Time</string>
+    <string name="app_name">Meu Ponto</string>
     <string name="action_settings">Configurações</string>
     <string name="title_activity_settings">Configurações</string>
     <string name="title_activity_relatorio">Relatórios</string>

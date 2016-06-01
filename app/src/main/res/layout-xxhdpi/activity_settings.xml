@@ -415,8 +415,8 @@
                         android:id="@+id/rd_senha_habilitar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="27dp"
-                        android:layout_marginRight="27dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginRight="32dp"
                         android:checked="true"
                         android:text="@string/rd_senha_sim"
                         android:textColor="@color/colorPrimary" />
@@ -440,13 +440,5 @@
         </ScrollView>
 
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/btnSalvarConfig"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="4dp"
-        android:text="@string/btn_salvar_config" />
 </LinearLayout>
 

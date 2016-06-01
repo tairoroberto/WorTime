@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "br.com.trmasolucoes.worktime"
+        applicationId "br.com.trmasolucoes.meuponto"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
