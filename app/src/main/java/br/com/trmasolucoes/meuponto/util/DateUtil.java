@@ -46,6 +46,12 @@ public class DateUtil {
         return dateFim.getTime();
     }
 
+    public static int getLastDayMonth() {
+        Calendar cal = GregorianCalendar.getInstance();
+        cal.setTime( new Date() );
+        return cal.getActualMaximum( Calendar.DAY_OF_MONTH );
+    }
+
     /*Metodo para pegar a data do dia de hoje do mes*/
     public static Date getDataHoje(){
         Calendar calendar = Calendar.getInstance();
