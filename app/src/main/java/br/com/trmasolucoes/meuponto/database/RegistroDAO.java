@@ -54,27 +54,31 @@ public class RegistroDAO {
 
     public ArrayList<Registro> getAll() {
         ArrayList<Registro> list = new ArrayList<Registro>();
-
         String[] columns = {"_id","data","horario","tipo","foto","observacao"};
         Cursor cursor = db.query("registros", columns, null, null, null, null, "_id");
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
 
-            do {
-                Registro registro = new Registro();
+        try{
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 
-                registro.setId(cursor.getLong(0));
-                registro.setData(DateUtil.getStringToDate(cursor.getString(1)));
-                registro.setHorario(DateUtil.getStringToDate(cursor.getString(2)));
-                registro.setTipo(cursor.getString(3));
-                registro.setFoto(cursor.getString(4));
-                registro.setObservacao(cursor.getString(5));
+                do {
+                    Registro registro = new Registro();
 
-                list.add(registro);
-            } while (cursor.moveToNext());
+                    registro.setId(cursor.getLong(0));
+                    registro.setData(DateUtil.getStringToDate(cursor.getString(1)));
+                    registro.setHorario(DateUtil.getStringToDate(cursor.getString(2)));
+                    registro.setTipo(cursor.getString(3));
+                    registro.setFoto(cursor.getString(4));
+                    registro.setObservacao(cursor.getString(5));
+
+                    list.add(registro);
+                } while (cursor.moveToNext());
+            }
+            return(list);
+
+        }finally {
+            cursor.close();
         }
-        cursor.close();
-        return(list);
     }
 
     public Registro getById(long id) {
@@ -84,21 +88,23 @@ public class RegistroDAO {
         String where = "_id = ?";
 
         Cursor cursor = db.query("registros", columns, where, new String[]{"" + id}, null, null, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 
-            registro.setId(cursor.getLong(0));
-            registro.setData(DateUtil.getStringToDate(cursor.getString(1)));
-            registro.setHorario(DateUtil.getStringToDate(cursor.getString(2)));
-            registro.setTipo(cursor.getString(3));
-            registro.setFoto(cursor.getString(4));
-            registro.setObservacao(cursor.getString(5));
+                registro.setId(cursor.getLong(0));
+                registro.setData(DateUtil.getStringToDate(cursor.getString(1)));
+                registro.setHorario(DateUtil.getStringToDate(cursor.getString(2)));
+                registro.setTipo(cursor.getString(3));
+                registro.setFoto(cursor.getString(4));
+                registro.setObservacao(cursor.getString(5));
 
+                return registro;
+            } else {
+                return registro;
+            }
+        }finally {
             cursor.close();
-            return registro;
-        } else {
-            cursor.close();
-            return registro;
         }
     }
 
@@ -110,23 +116,27 @@ public class RegistroDAO {
         String where = "data = ?";
 
         Cursor cursor = db.query("registros", columns, where, new String[]{data}, null, null, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 
-            do {
-                Registro registro = new Registro();
+                do {
+                    Registro registro = new Registro();
 
-                registro.setId(cursor.getLong(0));
-                registro.setData(DateUtil.getStringToDate(cursor.getString(1)));
-                registro.setHorario(DateUtil.getStringToDate(cursor.getString(2)));
-                registro.setTipo(cursor.getString(3));
-                registro.setFoto(cursor.getString(4));
-                registro.setObservacao(cursor.getString(5));
+                    registro.setId(cursor.getLong(0));
+                    registro.setData(DateUtil.getStringToDate(cursor.getString(1)));
+                    registro.setHorario(DateUtil.getStringToDate(cursor.getString(2)));
+                    registro.setTipo(cursor.getString(3));
+                    registro.setFoto(cursor.getString(4));
+                    registro.setObservacao(cursor.getString(5));
 
-                list.add(registro);
-            } while (cursor.moveToNext());
+                    list.add(registro);
+                } while (cursor.moveToNext());
+            }
+
+            return(list);
+        }finally {
+            cursor.close();
         }
-        cursor.close();
-        return(list);
     }
 }

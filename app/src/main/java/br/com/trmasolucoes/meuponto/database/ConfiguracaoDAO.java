@@ -56,23 +56,27 @@ public class ConfiguracaoDAO {
 
         String[] columns = {"_id","empresa","email","senha","notificação"};
         Cursor cursor = db.query("configuracoes", columns, null, null, null, null, "_id");
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 
-            do {
-                Configuracao configuracao = new Configuracao();
+                do {
+                    Configuracao configuracao = new Configuracao();
 
-                configuracao.setId(cursor.getLong(0));
-                configuracao.setEmpresa(cursor.getString(1));
-                configuracao.setEmail(cursor.getString(2));
-                configuracao.setSenha(Boolean.parseBoolean(cursor.getString(3)));
-                configuracao.setNotificacao(Boolean.parseBoolean(cursor.getString(4)));
+                    configuracao.setId(cursor.getLong(0));
+                    configuracao.setEmpresa(cursor.getString(1));
+                    configuracao.setEmail(cursor.getString(2));
+                    configuracao.setSenha(Boolean.parseBoolean(cursor.getString(3)));
+                    configuracao.setNotificacao(Boolean.parseBoolean(cursor.getString(4)));
 
-                list.add(configuracao);
-            } while (cursor.moveToNext());
+                    list.add(configuracao);
+                } while (cursor.moveToNext());
+            }
+
+            return(list);
+        }finally {
+            cursor.close();
         }
-        cursor.close();
-        return(list);
     }
 
     public Configuracao getById(long id) {
@@ -82,20 +86,23 @@ public class ConfiguracaoDAO {
         String where = "_id = ?";
 
         Cursor cursor = db.query("configuracoes", columns, where, new String[]{"" + id}, null, null, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 
-            configuracao.setId(cursor.getLong(0));
-            configuracao.setEmpresa(cursor.getString(1));
-            configuracao.setEmail(cursor.getString(2));
-            configuracao.setSenha(Boolean.parseBoolean(cursor.getString(3)));
-            configuracao.setNotificacao(Boolean.parseBoolean(cursor.getString(4)));
+                configuracao.setId(cursor.getLong(0));
+                configuracao.setEmpresa(cursor.getString(1));
+                configuracao.setEmail(cursor.getString(2));
+                configuracao.setSenha(Boolean.parseBoolean(cursor.getString(3)));
+                configuracao.setNotificacao(Boolean.parseBoolean(cursor.getString(4)));
 
+                return configuracao;
+            } else {
+
+                return configuracao;
+            }
+        }finally {
             cursor.close();
-            return configuracao;
-        } else {
-            cursor.close();
-            return configuracao;
         }
     }
 
@@ -107,22 +114,26 @@ public class ConfiguracaoDAO {
         String where = "data = ?";
 
         Cursor cursor = db.query("configuracoes", columns, where, new String[]{data}, null, null, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 
-            do {
-                Configuracao configuracao = new Configuracao();
+                do {
+                    Configuracao configuracao = new Configuracao();
 
-                configuracao.setId(cursor.getLong(0));
-                configuracao.setEmpresa(cursor.getString(1));
-                configuracao.setEmail(cursor.getString(2));
-                configuracao.setSenha(Boolean.parseBoolean(cursor.getString(3)));
-                configuracao.setNotificacao(Boolean.parseBoolean(cursor.getString(4)));
+                    configuracao.setId(cursor.getLong(0));
+                    configuracao.setEmpresa(cursor.getString(1));
+                    configuracao.setEmail(cursor.getString(2));
+                    configuracao.setSenha(Boolean.parseBoolean(cursor.getString(3)));
+                    configuracao.setNotificacao(Boolean.parseBoolean(cursor.getString(4)));
 
-                list.add(configuracao);
-            } while (cursor.moveToNext());
+                    list.add(configuracao);
+                } while (cursor.moveToNext());
+            }
+
+            return(list);
+        }finally {
+            cursor.close();
         }
-        cursor.close();
-        return(list);
     }
 }

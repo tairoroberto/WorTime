@@ -33,8 +33,17 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
     protected SwipeRefreshLayout mSwipeRefreshLayout;
     private RegistroDAO registroDAO;
     private RegistroAdapter adapter;
+    private int data_registro_page;
 
     public static RegistroFragment newInstance(int dataRegitro) {
+        RegistroFragment fragment = new RegistroFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_DATA_REGISTRO, dataRegitro);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static RegistroFragment newInstance(int dataRegitro, String data) {
         RegistroFragment fragment = new RegistroFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_DATA_REGISTRO, dataRegitro);
@@ -48,6 +57,9 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
 
         if(savedInstanceState != null){
             mList = savedInstanceState.getParcelableArrayList("mList");
+        }
+        if (getArguments() != null) {
+            this.data_registro_page = getArguments().getInt(ARG_DATA_REGISTRO);
         }
     }
 
@@ -96,7 +108,7 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
         adapter = new RegistroAdapter(getActivity(), mList);
         mRecyclerView.setAdapter(adapter);
 
-        Toast.makeText(getActivity(), "" + getArguments().getInt(ARG_DATA_REGISTRO), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getActivity(), "" + getArguments().getInt(ARG_DATA_REGISTRO), Toast.LENGTH_SHORT).show();
         return view;
     }
 
@@ -166,5 +178,8 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("mList", (ArrayList<Registro>) mList);
+        if (getArguments() != null) {
+            this.data_registro_page = getArguments().getInt(ARG_DATA_REGISTRO);
+        }
     }
 }

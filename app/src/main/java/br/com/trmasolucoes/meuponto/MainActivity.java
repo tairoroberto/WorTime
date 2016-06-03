@@ -2,6 +2,7 @@ package br.com.trmasolucoes.meuponto;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,10 +17,6 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import br.com.trmasolucoes.meuponto.database.RegistroDAO;
 import br.com.trmasolucoes.meuponto.domain.Registro;
@@ -62,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         setFloatingActionButton();
+        int[] dia = DateUtil.getDayMonthYear();
+        Log.i(TAG, "Data: " + dia[0] +"/"+dia[1]+"/"+dia[2]);
+        mViewPager.setCurrentItem(dia[0]);
     }
 
 
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return RegistroFragment.newInstance(position);
+            return RegistroFragment.newInstance(position + 1);
         }
 
         @Override
@@ -169,5 +169,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         fab.close(true);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
     }
 }

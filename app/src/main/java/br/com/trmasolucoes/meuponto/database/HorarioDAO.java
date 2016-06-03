@@ -84,24 +84,28 @@ public class HorarioDAO {
 
         String[] columns = {"_id","dia_semana","entrada","almoco","almoco_retorno","saida"};
         Cursor cursor = db.query("horarios", columns, null, null, null, null, "_id");
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 
-            do {
-                Horario horario = new Horario();
+                do {
+                    Horario horario = new Horario();
 
-                horario.setId(cursor.getLong(0));
-                horario.setDiaSemana(cursor.getString(1));
-                horario.setEntrada(cursor.getString(2));
-                horario.setAlmoco(cursor.getString(3));
-                horario.setAlmocoRetorno(cursor.getString(4));
-                horario.setSaida(cursor.getString(5));
+                    horario.setId(cursor.getLong(0));
+                    horario.setDiaSemana(cursor.getString(1));
+                    horario.setEntrada(cursor.getString(2));
+                    horario.setAlmoco(cursor.getString(3));
+                    horario.setAlmocoRetorno(cursor.getString(4));
+                    horario.setSaida(cursor.getString(5));
 
-                list.add(horario);
-            } while (cursor.moveToNext());
+                    list.add(horario);
+                } while (cursor.moveToNext());
+            }
+
+            return(list);
+        }finally {
+            cursor.close();
         }
-        cursor.close();
-        return(list);
     }
 
     public Horario getById(long id) {
@@ -111,21 +115,23 @@ public class HorarioDAO {
         String where = "_id = ?";
 
         Cursor cursor = db.query("horarios", columns, where, new String[]{"" + id}, null, null, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 
-            horario.setId(cursor.getLong(0));
-            horario.setDiaSemana(cursor.getString(1));
-            horario.setEntrada(cursor.getString(2));
-            horario.setAlmoco(cursor.getString(3));
-            horario.setAlmocoRetorno(cursor.getString(4));
-            horario.setSaida(cursor.getString(5));
+                horario.setId(cursor.getLong(0));
+                horario.setDiaSemana(cursor.getString(1));
+                horario.setEntrada(cursor.getString(2));
+                horario.setAlmoco(cursor.getString(3));
+                horario.setAlmocoRetorno(cursor.getString(4));
+                horario.setSaida(cursor.getString(5));
 
+                return horario;
+            } else {
+                return horario;
+            }
+        }finally {
             cursor.close();
-            return horario;
-        } else {
-            cursor.close();
-            return horario;
         }
     }
 
@@ -144,21 +150,24 @@ public class HorarioDAO {
         }
 
         Cursor cursor = db.query("horarios", columns, where, selectionArgs, null, null, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 
-            horario.setId(cursor.getLong(0));
-            horario.setDiaSemana(cursor.getString(1));
-            horario.setEntrada(cursor.getString(2));
-            horario.setAlmoco(cursor.getString(3));
-            horario.setAlmocoRetorno(cursor.getString(4));
-            horario.setSaida(cursor.getString(5));
+                horario.setId(cursor.getLong(0));
+                horario.setDiaSemana(cursor.getString(1));
+                horario.setEntrada(cursor.getString(2));
+                horario.setAlmoco(cursor.getString(3));
+                horario.setAlmocoRetorno(cursor.getString(4));
+                horario.setSaida(cursor.getString(5));
 
+                return horario;
+            } else {
+
+                return horario;
+            }
+        }finally {
             cursor.close();
-            return horario;
-        } else {
-            cursor.close();
-            return horario;
         }
     }
 
@@ -170,23 +179,27 @@ public class HorarioDAO {
         String groupBy = "dia_semana";
 
         Cursor cursor = db.query("horarios", columns, where, new String[]{dia}, groupBy, null, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 
-            do {
-                Horario horario = new Horario();
+                do {
+                    Horario horario = new Horario();
 
-                horario.setId(cursor.getLong(0));
-                horario.setDiaSemana(cursor.getString(1));
-                horario.setEntrada(cursor.getString(2));
-                horario.setAlmoco(cursor.getString(3));
-                horario.setAlmocoRetorno(cursor.getString(4));
-                horario.setSaida(cursor.getString(5));
+                    horario.setId(cursor.getLong(0));
+                    horario.setDiaSemana(cursor.getString(1));
+                    horario.setEntrada(cursor.getString(2));
+                    horario.setAlmoco(cursor.getString(3));
+                    horario.setAlmocoRetorno(cursor.getString(4));
+                    horario.setSaida(cursor.getString(5));
 
-                list.add(horario);
-            } while (cursor.moveToNext());
+                    list.add(horario);
+                } while (cursor.moveToNext());
+            }
+
+            return(list);
+        }finally {
+            cursor.close();
         }
-        cursor.close();
-        return(list);
     }
 }
