@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager.setAdapter(mSectionsPagerAdapter);
         setFloatingActionButton();
         int[] dia = DateUtil.getDayMonthYear();
-        Log.i(TAG, "Data: " + dia[0] +"/"+dia[1]+"/"+dia[2]);
+        //Log.i(TAG, "Data: " + dia[0] +"/"+dia[1]+"/"+dia[2]);
         mViewPager.setCurrentItem(dia[0]);
     }
 
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return RegistroFragment.newInstance(position + 1);
+            return RegistroFragment.newInstance(position);
         }
 
         @Override

@@ -161,4 +161,14 @@ public class DateUtil {
         DateFormat dateFormat = new SimpleDateFormat("yyyy");
         return dateFormat.format(getDataHoje());
     }
+
+    public static Date getIntToDate(int dia, int mes, int ano) {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("ddMMyyyy");
+        try {
+            return originalFormat.parse(String.valueOf(dia) + String.valueOf(mes) + String.valueOf(ano));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

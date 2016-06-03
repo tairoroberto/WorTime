@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -27,26 +26,24 @@ import br.com.trmasolucoes.meuponto.util.DateUtil;
 
 public class RegistroFragment extends Fragment implements RecyclerViewOnClickListenerHack {
     protected static final String TAG = "Script";
-    private static final String ARG_DATA_REGISTRO = "data_registro";
+    private static final String ARG_DIA_REGISTRO = "dia_registro";
+    private static final String ARG_MES_REGISTRO = "mes_registro";
+    private static final String ARG_ANO_REGISTRO = "ano_registro";
     protected RecyclerView mRecyclerView;
     protected List<Registro> mList = new ArrayList<>();
     protected SwipeRefreshLayout mSwipeRefreshLayout;
     private RegistroDAO registroDAO;
     private RegistroAdapter adapter;
     private int data_registro_page;
+    private String data;
 
-    public static RegistroFragment newInstance(int dataRegitro) {
+    public static RegistroFragment newInstance(int diaRegitro) {
         RegistroFragment fragment = new RegistroFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_DATA_REGISTRO, dataRegitro);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public static RegistroFragment newInstance(int dataRegitro, String data) {
-        RegistroFragment fragment = new RegistroFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_DATA_REGISTRO, dataRegitro);
+        int[] dia = DateUtil.getDayMonthYear();
+        args.putString(ARG_DIA_REGISTRO, (diaRegitro<9)?"0"+diaRegitro:""+diaRegitro);
+        args.putString(ARG_MES_REGISTRO,(dia[1]<9)?"0"+dia[1]:""+dia[1]);
+        args.putString(ARG_ANO_REGISTRO,""+dia[2]);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,7 +56,7 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
             mList = savedInstanceState.getParcelableArrayList("mList");
         }
         if (getArguments() != null) {
-            this.data_registro_page = getArguments().getInt(ARG_DATA_REGISTRO);
+            this.data = getArguments().getString(ARG_ANO_REGISTRO)+"-"+getArguments().getString(ARG_MES_REGISTRO)+"-"+getArguments().getString(ARG_DIA_REGISTRO);
         }
     }
 
@@ -83,6 +80,8 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
             }
         });
 
+        this.data = getArguments().getString(ARG_ANO_REGISTRO)+"-"+getArguments().getString(ARG_MES_REGISTRO)+"-"+getArguments().getString(ARG_DIA_REGISTRO);
+
         /** Atualiza a lista de registros */
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl_swipe);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -90,7 +89,7 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
             public void onRefresh() {
                 // Refresh items
                 registroDAO = new RegistroDAO(getActivity());
-                mList = registroDAO.getByDate(DateUtil.getDateToString(DateUtil.getDataHoje()));
+                mList = registroDAO.getByDate(data);
                 adapter = new RegistroAdapter(getActivity(), mList);
                 mRecyclerView.setAdapter(adapter);
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -104,11 +103,11 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
 
         /** Busca os dados dos registros */
         registroDAO = new RegistroDAO(getActivity());
-        mList = registroDAO.getByDate(DateUtil.getDateToString(DateUtil.getDataHoje()));
+        mList = registroDAO.getByDate(data);
         adapter = new RegistroAdapter(getActivity(), mList);
         mRecyclerView.setAdapter(adapter);
 
-       // Toast.makeText(getActivity(), "" + getArguments().getInt(ARG_DATA_REGISTRO), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getActivity(), "" + getArguments().getInt(ARG_DIA_REGISTRO), Toast.LENGTH_SHORT).show();
         return view;
     }
 
@@ -179,7 +178,7 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("mList", (ArrayList<Registro>) mList);
         if (getArguments() != null) {
-            this.data_registro_page = getArguments().getInt(ARG_DATA_REGISTRO);
+            this.data = getArguments().getString(ARG_ANO_REGISTRO)+"-"+getArguments().getString(ARG_MES_REGISTRO)+"-"+getArguments().getString(ARG_DIA_REGISTRO);
         }
     }
 }
