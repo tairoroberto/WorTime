@@ -45,7 +45,8 @@ public class RegistroAdapter extends RecyclerView.Adapter<RegistroAdapter.ViewHo
     public void onBindViewHolder(ViewHolder myViewHolder, int position) {
 
         Registro registro = mList.get(position);
-        myViewHolder.txtHorario.setText(DateUtil.getDateToString(registro.getData()));
+        String[] data = DateUtil.getDateToString(registro.getData()).split(" ");
+        myViewHolder.txtHorario.setText(data[1]);
 
         try{
             YoYo.with(Techniques.BounceIn)
