@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import br.com.trmasolucoes.meuponto.domain.Horario;
  */
 public class HorarioDAO {
 
+    private static final String TAG = "Script";
     private SQLiteDatabase db;
     private Context context;
 
@@ -24,26 +26,34 @@ public class HorarioDAO {
     }
 
     public void insert(Horario horario) {
-        ContentValues values = new ContentValues();
-        values.put("dia_semana", horario.getDiaSemana());
-        values.put("entrada", horario.getEntrada());
-        values.put("almoco", horario.getAlmoco());
-        values.put("almoco_retorno", horario.getAlmocoRetorno());
-        values.put("saida", horario.getSaida());
+        try {
+            ContentValues values = new ContentValues();
+            values.put("dia_semana", horario.getDiaSemana());
+            values.put("entrada", horario.getEntrada());
+            values.put("almoco", horario.getAlmoco());
+            values.put("almoco_retorno", horario.getAlmocoRetorno());
+            values.put("saida", horario.getSaida());
 
-        db.insert("horarios", null, values);
+            db.insert("horarios", null, values);
+        }catch (Exception e){
+            Log.i(TAG, "insert: "+ e.getMessage());
+        }
     }
 
 
     public void update(Horario horario) {
-        ContentValues values = new ContentValues();
-        values.put("dia_semana", horario.getDiaSemana());
-        values.put("entrada", horario.getEntrada());
-        values.put("almoco", horario.getAlmoco());
-        values.put("almoco_retorno", horario.getAlmocoRetorno());
-        values.put("saida", horario.getSaida());
+        try {
+            ContentValues values = new ContentValues();
+            values.put("dia_semana", horario.getDiaSemana());
+            values.put("entrada", horario.getEntrada());
+            values.put("almoco", horario.getAlmoco());
+            values.put("almoco_retorno", horario.getAlmocoRetorno());
+            values.put("saida", horario.getSaida());
 
-        db.update("horarios", values, "_id = ?", new String[]{"" + horario.getId()});
+            db.update("horarios", values, "_id = ?", new String[]{"" + horario.getId()});
+        }catch (Exception e){
+            Log.i(TAG, "update: "+ e.getMessage());
+        }
     }
 
     public void updateByWeekDay(Horario horario, String campo, String hora) {
@@ -72,12 +82,13 @@ public class HorarioDAO {
         db.update("horarios", values, "dia_semana = ? ", new String[]{horario.getDiaSemana()});
     }
 
-
     public void delete(Horario horario) {
-        db.delete("horarios", "_id = ?", new String[]{"" + horario.getId()});
+        try {
+            db.delete("horarios", "_id = ?", new String[]{"" + horario.getId()});
+        }catch (Exception e){
+            Log.i(TAG, "delete: "+ e.getMessage());
+        }
     }
-
-
 
     public ArrayList<Horario> getAll() {
         ArrayList<Horario> list = new ArrayList<>();
@@ -103,6 +114,10 @@ public class HorarioDAO {
             }
 
             return(list);
+        }catch (Exception e){
+            Log.i(TAG, "getAll: " + e.getMessage());
+            return(list);
+
         }finally {
             cursor.close();
         }
@@ -130,6 +145,10 @@ public class HorarioDAO {
             } else {
                 return horario;
             }
+        }catch (Exception e){
+            Log.i(TAG, "getById: " + e.getMessage());
+            return(horario);
+
         }finally {
             cursor.close();
         }
@@ -166,6 +185,10 @@ public class HorarioDAO {
 
                 return horario;
             }
+        }catch (Exception e){
+            Log.i(TAG, "getByWeekDay: " + e.getMessage());
+            return(horario);
+
         }finally {
             cursor.close();
         }
@@ -198,6 +221,10 @@ public class HorarioDAO {
             }
 
             return(list);
+        }catch (Exception e){
+            Log.i(TAG, "getByDay: " + e.getMessage());
+            return(list);
+
         }finally {
             cursor.close();
         }

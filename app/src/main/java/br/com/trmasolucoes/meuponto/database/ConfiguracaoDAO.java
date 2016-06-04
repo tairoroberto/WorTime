@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import br.com.trmasolucoes.meuponto.domain.Configuracao;
  */
 public class ConfiguracaoDAO {
 
+    private static final String TAG = "Script";
     private SQLiteDatabase db;
     private Context context;
 
@@ -74,6 +76,10 @@ public class ConfiguracaoDAO {
             }
 
             return(list);
+        }catch (Exception e){
+            Log.i(TAG, "getAll: " + e.getMessage());
+            return(list);
+
         }finally {
             cursor.close();
         }
@@ -101,6 +107,10 @@ public class ConfiguracaoDAO {
 
                 return configuracao;
             }
+        }catch (Exception e){
+            Log.i(TAG, "getById: " + e.getMessage());
+            return(configuracao);
+
         }finally {
             cursor.close();
         }
@@ -132,6 +142,10 @@ public class ConfiguracaoDAO {
             }
 
             return(list);
+        }catch (Exception e){
+            Log.i(TAG, "getByDate: " + e.getMessage());
+            return(list);
+
         }finally {
             cursor.close();
         }

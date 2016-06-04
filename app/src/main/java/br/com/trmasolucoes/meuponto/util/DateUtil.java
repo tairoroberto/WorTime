@@ -1,5 +1,6 @@
 package br.com.trmasolucoes.meuponto.util;
 
+import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
@@ -14,12 +15,25 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import br.com.trmasolucoes.meuponto.R;
+
 /**
  * Created by tairo on 28/03/15.
  */
 public class DateUtil {
     private static NumberFormat numberFormat = new DecimalFormat("#,##0.00", new DecimalFormatSymbols());
     private static String symbol = numberFormat.getCurrency().getSymbol();
+    public static final Calendar FIRST_DAY_OF_TIME;
+    public static final Calendar LAST_DAY_OF_TIME;
+    public static final int DAYS_OF_TIME;
+
+    static {
+        FIRST_DAY_OF_TIME = Calendar.getInstance();
+        FIRST_DAY_OF_TIME.set(1900, Calendar.JANUARY, 1);
+        LAST_DAY_OF_TIME = Calendar.getInstance();
+        LAST_DAY_OF_TIME.set(2100, Calendar.DECEMBER, 31);
+        DAYS_OF_TIME = 73413; //(int) ((LAST_DAY_OF_TIME.getTimeInMillis() - FIRST_DAY_OF_TIME.getTimeInMillis()) / (24 * 60 * 60 * 1000));
+    }
 
     /*Metodo para pegar o inicio do mes*/
     public static Date getFirstDayMonth(final Date date) {
@@ -170,5 +184,56 @@ public class DateUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+
+    /**
+     * Get the position in the ViewPager for a given day
+     *
+     * @param day
+     * @return the position or 0 if day is null
+     */
+    public static int getPositionForDay(Calendar day) {
+        if (day != null) {
+            return (int) ((day.getTimeInMillis() - FIRST_DAY_OF_TIME.getTimeInMillis())
+                    / 86400000  //(24 * 60 * 60 * 1000)
+            );
+        }
+        return 0;
+    }
+
+    /**
+     * Get the day for a given position in the ViewPager
+     *
+     * @param position
+     * @return the day
+     * @throws IllegalArgumentException if position is negative
+     */
+    public static Calendar getDayForPosition(int position) throws IllegalArgumentException {
+        if (position < 0) {
+            throw new IllegalArgumentException("posição não pode ser negativa");
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(FIRST_DAY_OF_TIME.getTimeInMillis());
+        cal.add(Calendar.DAY_OF_YEAR, position);
+        return cal;
+    }
+
+
+    public static String getFormattedDate(Context context, long date, String pattern) {
+        final String defaultPattern = "yyyy-MM-dd";
+
+        if (pattern == null) {
+            pattern = defaultPattern;
+        }
+        SimpleDateFormat simpleDateFormat = null;
+        try {
+            simpleDateFormat = new SimpleDateFormat(pattern);
+        } catch (IllegalArgumentException e) {
+            simpleDateFormat = new SimpleDateFormat(defaultPattern);
+        }
+
+        return simpleDateFormat.format(new Date(date));
     }
 }

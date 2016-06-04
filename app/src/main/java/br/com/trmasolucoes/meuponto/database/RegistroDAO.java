@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import java.util.ArrayList;
 import br.com.trmasolucoes.meuponto.domain.Registro;
 import br.com.trmasolucoes.meuponto.util.DateUtil;
@@ -13,6 +15,7 @@ import br.com.trmasolucoes.meuponto.util.DateUtil;
  */
 public class RegistroDAO {
 
+    private static final String TAG = "Script";
     private SQLiteDatabase db;
     private Context context;
 
@@ -23,31 +26,43 @@ public class RegistroDAO {
     }
 
     public void insert(Registro registro) {
-        ContentValues values = new ContentValues();
-        values.put("data", DateUtil.getDateToString(registro.getData()));
-        values.put("horario", DateUtil.getDateToString(registro.getHorario()));
-        values.put("tipo", registro.getTipo());
-        values.put("foto", registro.getFoto());
-        values.put("observacao", registro.getObservacao());
+        try {
+            ContentValues values = new ContentValues();
+            values.put("data", DateUtil.getDateToString(registro.getData()));
+            values.put("horario", DateUtil.getDateToString(registro.getHorario()));
+            values.put("tipo", registro.getTipo());
+            values.put("foto", registro.getFoto());
+            values.put("observacao", registro.getObservacao());
 
-        db.insert("registros", null, values);
+            db.insert("registros", null, values);
+        }catch (Exception e){
+            Log.i(TAG, "insert: " + e.getMessage());
+        }
     }
 
 
     public void update(Registro registro) {
-        ContentValues values = new ContentValues();
-        values.put("data", DateUtil.getDateToString(registro.getData()));
-        values.put("horario", DateUtil.getDateToString(registro.getHorario()));
-        values.put("tipo", registro.getTipo());
-        values.put("foto", registro.getFoto());
-        values.put("observacao", registro.getObservacao());
+        try {
+            ContentValues values = new ContentValues();
+            values.put("data", DateUtil.getDateToString(registro.getData()));
+            values.put("horario", DateUtil.getDateToString(registro.getHorario()));
+            values.put("tipo", registro.getTipo());
+            values.put("foto", registro.getFoto());
+            values.put("observacao", registro.getObservacao());
 
-        db.update("registros", values, "_id = ?", new String[]{"" + registro.getId()});
+            db.update("registros", values, "_id = ?", new String[]{"" + registro.getId()});
+        }catch (Exception e){
+            Log.i(TAG, "update: " + e.getMessage());
+        }
     }
 
 
     public void delete(Registro registro) {
-        db.delete("registros", "_id = ?", new String[]{"" + registro.getId()});
+        try {
+            db.delete("registros", "_id = ?", new String[]{"" + registro.getId()});
+        }catch (Exception e){
+            Log.i(TAG, "delete: "+ e.getMessage());
+        }
     }
 
 
@@ -74,6 +89,10 @@ public class RegistroDAO {
                     list.add(registro);
                 } while (cursor.moveToNext());
             }
+            return(list);
+
+        }catch (Exception e){
+            Log.i(TAG, "getAll: " + e.getMessage());
             return(list);
 
         }finally {
@@ -103,6 +122,10 @@ public class RegistroDAO {
             } else {
                 return registro;
             }
+        }catch (Exception e){
+            Log.i(TAG, "getById: " + e.getMessage());
+            return(registro);
+
         }finally {
             cursor.close();
         }
@@ -113,9 +136,9 @@ public class RegistroDAO {
         ArrayList<Registro> list = new ArrayList<Registro>();
 
         String[] columns = {"_id","data","horario","tipo","foto","observacao"};
-        String where = "data = ?";
+        String where = "data BETWEEN ? AND ?";
 
-        Cursor cursor = db.query("registros", columns, where, new String[]{data}, null, null, null);
+        Cursor cursor = db.query("registros", columns, where, new String[]{data+ " 00:00:00",data+ " 23:59:59"}, null, null, null);
         try {
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
@@ -135,7 +158,11 @@ public class RegistroDAO {
             }
 
             return(list);
-        }finally {
+        }catch (Exception e){
+            Log.i(TAG, "getByDate: " + e.getMessage());
+            return(list);
+
+        } finally {
             cursor.close();
         }
     }
