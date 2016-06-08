@@ -236,4 +236,20 @@ public class DateUtil {
 
         return simpleDateFormat.format(new Date(date));
     }
+
+    public static String getFormattedDate(Date date, String pattern) {
+        final String defaultPattern = "yyyy-MM-dd";
+
+        if (pattern == null) {
+            pattern = defaultPattern;
+        }
+        SimpleDateFormat simpleDateFormat = null;
+        try {
+            simpleDateFormat = new SimpleDateFormat(pattern);
+        } catch (IllegalArgumentException e) {
+            simpleDateFormat = new SimpleDateFormat(defaultPattern);
+        }
+
+        return simpleDateFormat.format(date);
+    }
 }

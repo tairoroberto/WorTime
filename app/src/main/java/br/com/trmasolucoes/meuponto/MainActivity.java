@@ -11,7 +11,6 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +18,10 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -50,6 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static Context mContext;
     private static final String TAG = "Script";
     private PagerTabStrip pagerTabStrip;
+    private String hora;
+    private String minuto;
+    private TimePickerDialog timepicker;
+    private Registro registro;
+    private Date dataRegistro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,17 +169,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, "Registrar", Toast.LENGTH_SHORT).show();
                 /** Pego a data selecionada para inserir no banco */
                 Date data = DateUtil.getDayForPosition(mViewPager.getCurrentItem()).getTime();
-                Registro registro = new Registro(1, data, data,"almoço","2016-05-21-almoco","Observações teste tairo");
                 registroDAO = new RegistroDAO(MainActivity.this);
-                registroDAO.insert(registro);
+                ArrayList<Registro> registros  = registroDAO.getByDate(DateUtil.getFormattedDate(data, "yyyy-MM-dd"));
+
+                if (registros.size() < 4) {
+                    Registro entrada = registroDAO.getByDateType(DateUtil.getFormattedDate(data, "yyyy-MM-dd"), "entrada");
+                    Registro almoco = registroDAO.getByDateType(DateUtil.getFormattedDate(data, "yyyy-MM-dd"), "almoco");
+                    Registro almocoRetorno = registroDAO.getByDateType(DateUtil.getFormattedDate(data, "yyyy-MM-dd"), "almoco_retorno");
+                    Registro saida = registroDAO.getByDateType(DateUtil.getFormattedDate(data, "yyyy-MM-dd"), "saida");
+
+                    setHorarioRegistro(entrada, almoco, almocoRetorno, saida, data, registroDAO);
+                }else {
+                    Toast.makeText(MainActivity.this, "Todos os horários já foram preenchidos!", Toast.LENGTH_SHORT).show();
+                }
+
 
                 /** Retrono os dados do banco e atualizo o ViePager */
                 int position = mViewPager.getCurrentItem();
                 mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
                 mViewPager.setAdapter(mSectionsPagerAdapter);
                 mViewPager.setCurrentItem(position);
-
-
 
                 break;
             case R.id.fab_relatorios:
@@ -194,9 +210,94 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.close(true);
     }
 
+    /** Verifico os registro se estão gravados
+     * Se não estiver chamo o datapicker para selecionan o horario */
+    private void setHorarioRegistro(Registro entrada, Registro almoco, Registro almocoRetorno, Registro saida, Date data, RegistroDAO registroDAO) {
+        this.registro = new Registro();
+        if (entrada.getHorario() == null) {
+            getDatePicker(data);
+            this.registro.setTipo("entrada");
+            this.dataRegistro = data;
+
+        }else if (almoco.getHorario() == null) {
+            getDatePicker(data);
+            this.registro.setTipo("almoco");
+            this.dataRegistro = data;
+
+        }else if (almocoRetorno.getHorario() == null) {
+            getDatePicker(data);
+            this.registro.setTipo("almoco_retorno");
+            this.dataRegistro = data;
+
+        }else if (saida.getHorario() == null) {
+            getDatePicker(data);
+            this.registro.setTipo("saida");
+            this.dataRegistro = data;
+        }
+    }
+
+    /**
+     * @param data
+     * Mostra o datapicker para selesão de horário
+     */
+    private void getDatePicker(Date data){
+
+        final Bundle bundle = new Bundle();
+        Calendar now = Calendar.getInstance();
+        now.setTime(data);
+
+        timepicker = TimePickerDialog.newInstance(
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                        onTimeSetBundle(hourOfDay,minute,second,bundle);
+                    }
+                },
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                true
+        );
+        timepicker.vibrate(true);
+        timepicker.dismissOnPause(true);
+        timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
+        timepicker.show(getFragmentManager(), "Timepickerdialog");
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
+    }
 
+    /**
+     * @param hourOfDay
+     * @param minute
+     * @param second
+     * @param bundle
+     * Seta o tempo que foi selecionado no datapicker
+     */
+    public void onTimeSetBundle(int hourOfDay, int minute, int second, Bundle bundle) {
+        this.minuto = (minute < 10)?"0"+minute:""+minute;
+        this.hora = (hourOfDay < 10)?"0"+hourOfDay:""+hourOfDay;
+
+        String pattern = "yyyy-MM-dd " + this.hora + ":"+this.minuto+":00";
+        Date data = DateUtil.getStringToDate(DateUtil.getFormattedDate(this.dataRegistro, pattern));
+        registro.setData(data);
+        registro.setHorario(data);
+        registroDAO = new RegistroDAO(MainActivity.this);
+        registroDAO.insert(registro);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        TimePickerDialog tpd = (TimePickerDialog) getFragmentManager().findFragmentByTag("TimepickerDialog");
+
+        if(tpd != null) tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+
+            }
+        });
     }
 }

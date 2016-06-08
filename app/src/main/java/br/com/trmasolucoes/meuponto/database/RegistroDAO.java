@@ -131,6 +131,37 @@ public class RegistroDAO {
         }
     }
 
+    /** Pega os registro do dia e hotario (entrada,almoco, almoco_retorno, saida) */
+    public Registro getByDateType(String data, String tipo) {
+        Registro registro = new Registro();
+
+        String[] columns = {"_id","data","horario","tipo","foto","observacao"};
+        String where = "data BETWEEN ? AND ? AND tipo = ?";
+
+        Cursor cursor = db.query("registros", columns, where, new String[]{data+ " 00:00:00",data+ " 23:59:59", tipo}, null, null, null);
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                registro.setId(cursor.getLong(0));
+                registro.setData(DateUtil.getStringToDate(cursor.getString(1)));
+                registro.setHorario(DateUtil.getStringToDate(cursor.getString(2)));
+                registro.setTipo(cursor.getString(3));
+                registro.setFoto(cursor.getString(4));
+                registro.setObservacao(cursor.getString(5));
+
+                return registro;
+            } else {
+                return registro;
+            }
+        }catch (Exception e){
+            Log.i(TAG, "getByDateType: " + e.getMessage());
+            return(registro);
+
+        }finally {
+            cursor.close();
+        }
+    }
 
     public ArrayList<Registro> getByDate(String data) {
         ArrayList<Registro> list = new ArrayList<Registro>();
