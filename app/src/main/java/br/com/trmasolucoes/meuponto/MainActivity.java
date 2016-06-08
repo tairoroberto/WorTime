@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private PagerTabStrip pagerTabStrip;
     private String hora;
     private String minuto;
+    private String segundo;
     private TimePickerDialog timepicker;
     private Registro registro;
     private Date dataRegistro;
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch( v.getId() ){
             case R.id.fab_registrar:
-                Toast.makeText(MainActivity.this, "Registrar", Toast.LENGTH_SHORT).show();
+
                 /** Pego a data selecionada para inserir no banco */
                 Date data = DateUtil.getDayForPosition(mViewPager.getCurrentItem()).getTime();
                 registroDAO = new RegistroDAO(MainActivity.this);
@@ -182,13 +183,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }else {
                     Toast.makeText(MainActivity.this, "Todos os horários já foram preenchidos!", Toast.LENGTH_SHORT).show();
                 }
-
-
-                /** Retrono os dados do banco e atualizo o ViePager */
-                int position = mViewPager.getCurrentItem();
-                mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-                mViewPager.setAdapter(mSectionsPagerAdapter);
-                mViewPager.setCurrentItem(position);
 
                 break;
             case R.id.fab_relatorios:
@@ -258,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 true
         );
         timepicker.vibrate(true);
+        timepicker.enableSeconds(true);
         timepicker.dismissOnPause(true);
         timepicker.setAccentColor(getResources().getColor(R.color.colorPrimary));
         timepicker.show(getFragmentManager(), "Timepickerdialog");
@@ -276,15 +271,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Seta o tempo que foi selecionado no datapicker
      */
     public void onTimeSetBundle(int hourOfDay, int minute, int second, Bundle bundle) {
-        this.minuto = (minute < 10)?"0"+minute:""+minute;
         this.hora = (hourOfDay < 10)?"0"+hourOfDay:""+hourOfDay;
+        this.minuto = (minute < 10)?"0"+minute:""+minute;
+        this.segundo = (second < 10)?"0"+second:""+second;
 
-        String pattern = "yyyy-MM-dd " + this.hora + ":"+this.minuto+":00";
+
+        String pattern = "yyyy-MM-dd " + this.hora + ":"+this.minuto+":"+this.segundo;
         Date data = DateUtil.getStringToDate(DateUtil.getFormattedDate(this.dataRegistro, pattern));
         registro.setData(data);
         registro.setHorario(data);
         registroDAO = new RegistroDAO(MainActivity.this);
         registroDAO.insert(registro);
+
+        /** Retrono os dados do banco e atualizo o ViePager */
+        int position = mViewPager.getCurrentItem();
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(position);
     }
 
     @Override
