@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto.extras;
+package br.com.trmasolucoes.worktime.extras;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

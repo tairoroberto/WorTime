@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto.util;
+package br.com.trmasolucoes.worktime.util;
 
 import android.content.Context;
 import android.os.Build;
@@ -14,8 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import br.com.trmasolucoes.meuponto.R;
 
 /**
  * Created by tairo on 28/03/15.

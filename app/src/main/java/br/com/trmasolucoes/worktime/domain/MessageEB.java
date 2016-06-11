@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto.domain;
+package br.com.trmasolucoes.worktime.domain;
 
 import org.w3c.dom.Document;
 

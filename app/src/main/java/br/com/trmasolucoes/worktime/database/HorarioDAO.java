@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto.database;
+package br.com.trmasolucoes.worktime.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import br.com.trmasolucoes.meuponto.domain.Horario;
+import br.com.trmasolucoes.worktime.domain.Horario;
 
 /**
  * Created by tairo on 13/04/16.

@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto;
+package br.com.trmasolucoes.worktime;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +17,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import br.com.trmasolucoes.meuponto.database.ConfiguracaoDAO;
-import br.com.trmasolucoes.meuponto.database.HorarioDAO;
-import br.com.trmasolucoes.meuponto.domain.Configuracao;
-import br.com.trmasolucoes.meuponto.domain.Horario;
+import br.com.trmasolucoes.worktime.database.ConfiguracaoDAO;
+import br.com.trmasolucoes.worktime.database.HorarioDAO;
+import br.com.trmasolucoes.worktime.domain.Configuracao;
+import br.com.trmasolucoes.worktime.domain.Horario;
 
 public class ConfiguracaoActivity extends AppCompatActivity {
     private static Button btnSegEntrada, btnSegAlmoco, btnSegAlmocoRetorno, btnSegSaida, btnSegTotal;

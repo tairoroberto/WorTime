@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto;
+package br.com.trmasolucoes.worktime;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

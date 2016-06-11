@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto.adapters;
+package br.com.trmasolucoes.worktime.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +13,10 @@ import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.List;
 
-import br.com.trmasolucoes.meuponto.R;
-import br.com.trmasolucoes.meuponto.domain.Registro;
-import br.com.trmasolucoes.meuponto.interfaces.RecyclerViewOnClickListenerHack;
-import br.com.trmasolucoes.meuponto.util.DateUtil;
+import br.com.trmasolucoes.worktime.R;
+import br.com.trmasolucoes.worktime.domain.Registro;
+import br.com.trmasolucoes.worktime.interfaces.RecyclerViewOnClickListenerHack;
+import br.com.trmasolucoes.worktime.util.DateUtil;
 
 public class RegistroAdapter extends RecyclerView.Adapter<RegistroAdapter.ViewHolder> {
     private Context mContext;

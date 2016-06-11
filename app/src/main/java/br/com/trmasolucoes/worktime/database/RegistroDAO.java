@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto.database;
+package br.com.trmasolucoes.worktime.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
-import br.com.trmasolucoes.meuponto.domain.Registro;
-import br.com.trmasolucoes.meuponto.util.DateUtil;
+import br.com.trmasolucoes.worktime.domain.Registro;
+import br.com.trmasolucoes.worktime.util.DateUtil;
 
 /**
  * Created by tairo on 13/04/16.

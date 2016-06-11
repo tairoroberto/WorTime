@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto.fragments;
+package br.com.trmasolucoes.worktime.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,12 +16,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.trmasolucoes.meuponto.R;
-import br.com.trmasolucoes.meuponto.adapters.RegistroAdapter;
-import br.com.trmasolucoes.meuponto.database.RegistroDAO;
-import br.com.trmasolucoes.meuponto.domain.Registro;
-import br.com.trmasolucoes.meuponto.interfaces.RecyclerViewOnClickListenerHack;
-import br.com.trmasolucoes.meuponto.util.DateUtil;
+import br.com.trmasolucoes.worktime.R;
+import br.com.trmasolucoes.worktime.adapters.RegistroAdapter;
+import br.com.trmasolucoes.worktime.database.RegistroDAO;
+import br.com.trmasolucoes.worktime.domain.Registro;
+import br.com.trmasolucoes.worktime.interfaces.RecyclerViewOnClickListenerHack;
+import br.com.trmasolucoes.worktime.util.DateUtil;
 
 
 public class RegistroFragment extends Fragment implements RecyclerViewOnClickListenerHack {

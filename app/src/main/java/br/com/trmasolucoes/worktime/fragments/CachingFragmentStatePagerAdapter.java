@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto.fragments;
+package br.com.trmasolucoes.worktime.fragments;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

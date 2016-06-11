@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto.domain;
+package br.com.trmasolucoes.worktime.domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;

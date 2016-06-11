@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto;
+package br.com.trmasolucoes.worktime;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,10 +25,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import br.com.trmasolucoes.meuponto.database.RegistroDAO;
-import br.com.trmasolucoes.meuponto.domain.Registro;
-import br.com.trmasolucoes.meuponto.fragments.RegistroFragment;
-import br.com.trmasolucoes.meuponto.util.DateUtil;
+import br.com.trmasolucoes.worktime.database.RegistroDAO;
+import br.com.trmasolucoes.worktime.domain.Registro;
+import br.com.trmasolucoes.worktime.fragments.RegistroFragment;
+import br.com.trmasolucoes.worktime.util.DateUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 

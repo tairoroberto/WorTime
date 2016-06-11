@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto.database;
+package br.com.trmasolucoes.worktime.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

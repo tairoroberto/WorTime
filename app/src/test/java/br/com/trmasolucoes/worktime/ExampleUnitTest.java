@@ -1,4 +1,4 @@
-package br.com.trmasolucoes.meuponto;
+package br.com.trmasolucoes.worktime;
 
 import org.junit.Test;
 
