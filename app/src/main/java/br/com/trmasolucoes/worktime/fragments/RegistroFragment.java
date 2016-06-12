@@ -1,8 +1,8 @@
 package br.com.trmasolucoes.worktime.fragments;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import br.com.trmasolucoes.worktime.R;
@@ -91,7 +96,7 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
                 registroDAO = new RegistroDAO(getActivity());
                 final long millis = getArguments().getLong(KEY_DATE);
                 registros = registroDAO.getByDate(DateUtil.getFormattedDate(getActivity(), millis,null));
-                adapter = new RegistroAdapter(getActivity(), registros);
+                adapter = new RegistroAdapter(getActivity(), registros, getFragmentManager());
                 mRecyclerView.setAdapter(adapter);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -104,7 +109,7 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
 
         /** Busca os dados dos registros */
         registroDAO = new RegistroDAO(getActivity());
-        adapter = new RegistroAdapter(getActivity(), registros);
+        adapter = new RegistroAdapter(getActivity(), registros, getFragmentManager());
         mRecyclerView.setAdapter(adapter);
         return view;
     }

@@ -1,12 +1,13 @@
 package br.com.trmasolucoes.worktime;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends android.support.v4.app.FragmentStatePagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         private Calendar cal;
 
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public android.app.Fragment getItem(int position) {
             long timeForPosition = DateUtil.getDayForPosition(position).getTimeInMillis();
             return RegistroFragment.newInstance(timeForPosition);
         }
@@ -285,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /** Retrono os dados do banco e atualizo o ViePager */
         int position = mViewPager.getCurrentItem();
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(position);
     }

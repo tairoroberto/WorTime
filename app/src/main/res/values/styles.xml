@@ -22,4 +22,11 @@
         <item name="android:background">@null</item>
         <item name="android:padding">0dp</item>
     </style>
+    <style name="AlertDialog" parent="MaterialDrawerBaseTheme.Light.AlertDialog">
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+    <style name="EditTextTintTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
 </resources>
