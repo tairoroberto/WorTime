@@ -1,10 +1,20 @@
 package br.com.trmasolucoes.worktime.adapters;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +33,7 @@ import com.orhanobut.dialogplus.OnItemClickListener;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,12 +44,16 @@ import br.com.trmasolucoes.worktime.domain.Registro;
 import br.com.trmasolucoes.worktime.interfaces.RecyclerViewOnClickListenerHack;
 import br.com.trmasolucoes.worktime.util.DateUtil;
 
-public class RegistroAdapter extends RecyclerView.Adapter<RegistroAdapter.ViewHolder> {
+public class RegistroAdapter extends RecyclerView.Adapter<RegistroAdapter.ViewHolder> implements PreferenceManager.OnActivityResultListener{
     private Context mContext;
     private List<Registro> mList;
     private LayoutInflater mLayoutInflater;
     private static RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
     private static final String TAG = "Script";
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private Uri fileUri;
+    private Bitmap profile_imageBitmap;
+    private Bitmap setphoto;
 
     private TimePickerDialog timepicker;
     private String hora;
@@ -48,6 +63,9 @@ public class RegistroAdapter extends RecyclerView.Adapter<RegistroAdapter.ViewHo
     private FragmentManager fragmentManager;
     private Registro registro;
     private RegistroDAO registroDAO;
+    private ImageView img_registro;
+    Activity activity;
+
 
     public RegistroAdapter(Context context, List<Registro> list, FragmentManager fragmentManager){
         this.mContext = context;
@@ -55,6 +73,7 @@ public class RegistroAdapter extends RecyclerView.Adapter<RegistroAdapter.ViewHo
         this.mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.fragmentManager = fragmentManager;
         registroDAO = new RegistroDAO(mContext);
+        activity = (Activity) mContext;
     }
 
 
@@ -123,8 +142,7 @@ public class RegistroAdapter extends RecyclerView.Adapter<RegistroAdapter.ViewHo
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         registroDAO.delete(registro);
-                        mList = registroDAO.getByDate(DateUtil.getFormattedDate(registro.getData(), "yyyy-MM-dd"));
-                        RegistroAdapter.this.notifyDataSetChanged();
+                        removeListItem(myViewHolder.getAdapterPosition());
                     }
                 });
                 dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
@@ -138,6 +156,7 @@ public class RegistroAdapter extends RecyclerView.Adapter<RegistroAdapter.ViewHo
             }
         });
 
+        /** IMplementação da edição das observações do registro */
         myViewHolder.imgObservacoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,6 +188,33 @@ public class RegistroAdapter extends RecyclerView.Adapter<RegistroAdapter.ViewHo
                 });
             }
         });
+
+        myViewHolder.imgFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String path = "";
+
+                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                File folder = new File(Environment.getExternalStorageDirectory() + "/Worktime/img");
+
+                if (!folder.exists()) {
+                    folder.mkdir();
+                }
+                final Calendar c = Calendar.getInstance();
+                String new_Date = c.get(Calendar.DAY_OF_MONTH) + "-"
+                        + ((c.get(Calendar.MONTH)) + 1) + "-"
+                        + c.get(Calendar.YEAR) + " " + c.get(Calendar.HOUR)
+                        + "-" + c.get(Calendar.MINUTE) + "-"
+                        + c.get(Calendar.SECOND);
+
+                path = String.format(Environment.getExternalStorageDirectory() + "/Worktime/img/%s.png", "LoadImg(" + new_Date + ")");
+                File photo = new File(path);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+
+                // start the image capture Intent
+                activity.startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            }
+        });
     }
 
     @Override
@@ -188,6 +234,53 @@ public class RegistroAdapter extends RecyclerView.Adapter<RegistroAdapter.ViewHo
     public void removeListItem(int position){
         mList.remove(position);
         notifyItemRemoved(position);
+    }
+
+    @Override
+    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            this.imageFromGallery(resultCode, data);
+
+            img_registro.setImageBitmap(null);
+
+            img_registro.setImageBitmap(setphoto);
+        }
+        return false;
+    }
+
+    private void imageFromGallery(int resultCode, Intent data) {
+        Uri selectedImage = data.getData();
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+        Cursor cursor = activity.getContentResolver().query(selectedImage,
+                filePathColumn, null, null, null);
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+
+        String profile_Path = cursor.getString(columnIndex);
+        cursor.close();
+
+        setphoto = BitmapFactory.decodeFile(profile_Path);
+
+    }
+
+    private void imageFromCamera(int resultCode, Intent data) {
+        updateImageView((Bitmap) data.getExtras().get("data"));
+    }
+
+    private void updateImageView(Bitmap newImage) {
+        setphoto = newImage.copy(Bitmap.Config.ARGB_8888, true);
+    }
+
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        CursorLoader cursorLoader = new CursorLoader(mContext, uri, projection, null, null, null);
+        Cursor cursor = cursorLoader.loadInBackground();
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
