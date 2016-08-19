@@ -1,18 +1,103 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.trmasolucoes.worktime.fragments.RegistroFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="br.com.trmasolucoes.worktime.fragments.RegistroFragment"
+    android:orientation="vertical">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_swipe"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_list"
-            android:scrollbars="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_height="0dp"
+        android:layout_weight="2">
 
-</RelativeLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl_swipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5">
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewHorario"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="100dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="false"
+                app:cardPreventCornerOverlap="false"
+                app:cardMaxElevation="3dp"
+                app:cardCornerRadius="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/fab_material_white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/previsao_de_saida"
+                    android:id="@+id/txtPrevisaoSaida"
+                    android:textColor="@color/accent"
+                    android:layout_marginLeft="43dp"
+                    android:layout_marginStart="43dp"
+                    android:layout_alignTop="@+id/txtPrevisao"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txtZero"
+                    android:id="@+id/txtPrevisao"
+                    android:textColor="@color/accent"
+                    android:layout_marginRight="59dp"
+                    android:layout_marginEnd="59dp"
+                    android:layout_above="@+id/txtSaldoDia"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/saldo_do_dia"
+                    android:id="@+id/txtSaldoDesc"
+                    android:textColor="@color/accent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignLeft="@+id/txtPrevisaoSaida"
+                    android:layout_alignStart="@+id/txtPrevisaoSaida" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txtZero"
+                    android:id="@+id/txtSaldoDia"
+                    android:textColor="@color/accent"
+                    android:layout_alignTop="@+id/txtSaldoDesc"
+                    android:layout_alignLeft="@+id/txtPrevisao"
+                    android:layout_alignStart="@+id/txtPrevisao" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</LinearLayout>

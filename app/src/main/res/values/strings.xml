@@ -29,4 +29,7 @@
     <string name="salvar">Salvar</string>
     <string name="sair">Sair</string>
     <string name="observacoes">Observações</string>
+    <string name="previsao_de_saida">Previsão de saída: </string>
+    <string name="txtZero">00:00</string>
+    <string name="saldo_do_dia">Saldo do dia:</string>
 </resources>
