@@ -22,6 +22,7 @@ import br.com.trmasolucoes.worktime.R;
 import br.com.trmasolucoes.worktime.adapters.RegistroAdapter;
 import br.com.trmasolucoes.worktime.database.HorarioDAO;
 import br.com.trmasolucoes.worktime.database.RegistroDAO;
+import br.com.trmasolucoes.worktime.domain.Horario;
 import br.com.trmasolucoes.worktime.domain.Registro;
 import br.com.trmasolucoes.worktime.interfaces.RecyclerViewOnClickListenerHack;
 import br.com.trmasolucoes.worktime.util.DateUtil;
@@ -104,7 +105,9 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
                 adapter = new RegistroAdapter(getActivity(), registros, getFragmentManager());
                 mRecyclerView.setAdapter(adapter);
                 mSwipeRefreshLayout.setRefreshing(false);
-                ajustarHorarioSaida(registros, registroDAO, horarioDAO);
+                if (registros.size() > 0){
+                    ajustarHorarioSaida(registros, registroDAO, horarioDAO);
+                }
             }
         });
         mRecyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), mRecyclerView, this));
@@ -115,6 +118,10 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
 
         /** Busca os dados dos registros */
         registroDAO = new RegistroDAO(getActivity());
+        horarioDAO = new HorarioDAO(getActivity());
+        if (registros.size() > 0){
+            ajustarHorarioSaida(registros, registroDAO, horarioDAO);
+        }
         adapter = new RegistroAdapter(getActivity(), registros, getFragmentManager());
         mRecyclerView.setAdapter(adapter);
         return view;
@@ -196,42 +203,65 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
         float saida = 0;
         float total = 0;
 
+        float entradaConfig = 0;
+        float almocoConfig = 0;
+        float almocoRetornoConfig = 0;
+        float saidaConfig = 0;
+        float totalConfig = 0;
+        float sugestao = 0;
+        float saldo = 0;
+        ArrayList<Horario> horarios;
+
 
         for (Registro registro : registros) {
             /** Separa a string "-" da data e coloca no textView */
             String[] data = DateUtil.getDateToString(registro.getData()).split(" ");
-            String[] horario = data[1].split(":");
+            String[] hora = data[1].split(":");
 
-            if (registro.getTipo().equalsIgnoreCase("entrada")){
-                entrada = getHorarioFloat(horario[0] +":"+ horario[1]);
-
-            }else if (registro.getTipo().equalsIgnoreCase("almoco")){
-                almoco = getHorarioFloat(horario[0] +":"+ horario[1]);
-
-            }else if (registro.getTipo().equalsIgnoreCase("almoco_retorno")){
-                almocoRetorno = getHorarioFloat(horario[0] +":"+ horario[1]);
-
-            }else if (registro.getTipo().equalsIgnoreCase("saida")){
-                saida = getHorarioFloat(horario[0] +":"+ horario[1]);
+            /** Separo os registros por periodo */
+            switch (registro.getTipo()) {
+                case "entrada" :
+                    entrada = getHorarioFloat(hora[0] +":"+ hora[1]);
+                    break;
+                case "almoco" :
+                    almoco = getHorarioFloat(hora[0] +":"+ hora[1]);
+                    break;
+                case "almoco_retorno" :
+                    almocoRetorno = getHorarioFloat(hora[0] +":"+ hora[1]);
+                    break;
+                case "saida" :
+                    saida = getHorarioFloat(hora[0] +":"+ hora[1]);
+                    break;
             }
+        }
 
+        /** Pego os horarios já configurados */
+        horarios = horarioDAO.getByNotNull(DateUtil.gerDayOfWeek(registros.get(0).getData()));
+        for (Horario horario : horarios) {
+            if (DateUtil.gerDayOfWeek(registros.get(0).getData()).equalsIgnoreCase(horario.getDiaSemana())){
+                entradaConfig = getHorarioFloat(horario.getEntrada());
+                almocoConfig = getHorarioFloat(horario.getAlmoco());
+                almocoRetornoConfig = getHorarioFloat(horario.getAlmocoRetorno());
+                saidaConfig = getHorarioFloat(horario.getSaida());
+                totalConfig = (saidaConfig - almocoRetornoConfig) + (almocoConfig - entradaConfig);
+            }
         }
 
         if (entrada > 0 && almoco > 0 && almocoRetorno > 0 && saida > 0){
-            total = (saida - almocoRetorno) + (almoco - entrada);
+            saldo = (saida - almocoRetorno) + (almoco - entrada);
 
         }else if (entrada > 0 && almoco > 0 && almocoRetorno > 0){
-            total = almocoRetorno + (almoco - entrada);
-
-        }else if (entrada > 0 && almoco > 0){
-            total = almoco - entrada;
+            float total1 = (almoco - entrada);
+            float total2 = (totalConfig - total1);
+            sugestao = almocoRetorno + total2;
 
         }else {
-            total = 0;
+            sugestao = 0;
+            saldo = 0;
         }
-        DecimalFormat df = new DecimalFormat("0.00");
-        String.valueOf(df.format(total));
 
+        txtPrevisaoSaida.setText(String.valueOf(getFloatHorario(sugestao)));
+        txtSaldoHorasDia.setText(String.valueOf(getFloatHorario(saldo)));
     }
 
     private static float getHorarioFloat(String horario){
@@ -239,5 +269,12 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
             return 0;
         }
         return Float.parseFloat(horario.replace(":","."));
+    }
+
+    private static String getFloatHorario(float horario){
+        if (horario == 0){
+            return "00:00";
+        }
+        return String.format("%.2f", horario).replace(".",":").replace(",",":");
     }
 }

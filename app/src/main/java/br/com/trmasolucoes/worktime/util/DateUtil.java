@@ -250,4 +250,35 @@ public class DateUtil {
 
         return simpleDateFormat.format(date);
     }
+
+    public static String gerDayOfWeek(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        String dia = "";
+
+        switch (cal.get(Calendar.DAY_OF_WEEK)){
+            case 1:
+                dia= "Dom";
+                break;
+            case 2:
+                dia= "Seg";
+                break;
+            case 3:
+                dia= "Ter";
+                break;
+            case 4:
+                dia= "Qua";
+                break;
+            case 5:
+                dia= "Qui";
+                break;
+            case 6:
+                dia= "Sex";
+                break;
+            case 7:
+                dia= "Sab";
+                break;
+        }
+        return dia;
+    }
 }

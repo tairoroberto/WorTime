@@ -229,4 +229,41 @@ public class HorarioDAO {
             cursor.close();
         }
     }
+
+
+    public ArrayList<Horario> getByNotNull(String dia) {
+        ArrayList<Horario> list = new ArrayList<>();
+
+        String[] columns = {"_id","dia_semana","entrada","almoco","almoco_retorno","saida"};
+        String where = "dia_semana = ? AND entrada is not null OR almoco is not null OR almoco_retorno is not null OR saida is not null";
+        String groupBy = "dia_semana";
+
+        Cursor cursor = db.query("horarios", columns, where, new String[]{dia}, groupBy, null, null);
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                do {
+                    Horario horario = new Horario();
+
+                    horario.setId(cursor.getLong(0));
+                    horario.setDiaSemana(cursor.getString(1));
+                    horario.setEntrada(cursor.getString(2));
+                    horario.setAlmoco(cursor.getString(3));
+                    horario.setAlmocoRetorno(cursor.getString(4));
+                    horario.setSaida(cursor.getString(5));
+
+                    list.add(horario);
+                } while (cursor.moveToNext());
+            }
+
+            return(list);
+        }catch (Exception e){
+            Log.i(TAG, "getByDay: " + e.getMessage());
+            return(list);
+
+        }finally {
+            cursor.close();
+        }
+    }
 }
