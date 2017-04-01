@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -236,9 +235,9 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
         }
 
         /** Pego os horarios já configurados */
-        horarios = horarioDAO.getByNotNull(DateUtil.gerDayOfWeek(registros.get(0).getData()));
+        horarios = horarioDAO.getByNotNull(DateUtil.getDayOfWeek(registros.get(0).getData()));
         for (Horario horario : horarios) {
-            if (DateUtil.gerDayOfWeek(registros.get(0).getData()).equalsIgnoreCase(horario.getDiaSemana())){
+            if (DateUtil.getDayOfWeek(registros.get(0).getData()).equalsIgnoreCase(horario.getDiaSemana())){
                 entradaConfig = getHorarioFloat(horario.getEntrada());
                 almocoConfig = getHorarioFloat(horario.getAlmoco());
                 almocoRetornoConfig = getHorarioFloat(horario.getAlmocoRetorno());

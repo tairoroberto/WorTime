@@ -251,34 +251,55 @@ public class DateUtil {
         return simpleDateFormat.format(date);
     }
 
-    public static String gerDayOfWeek(Date date){
+    public static String getDayOfWeek(Date date){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         String dia = "";
 
         switch (cal.get(Calendar.DAY_OF_WEEK)){
-            case 1:
+            case Calendar.SUNDAY:
                 dia= "Dom";
                 break;
-            case 2:
+            case Calendar.MONDAY:
                 dia= "Seg";
                 break;
-            case 3:
+            case Calendar.TUESDAY:
                 dia= "Ter";
                 break;
-            case 4:
+            case Calendar.WEDNESDAY:
                 dia= "Qua";
                 break;
-            case 5:
+            case Calendar.THURSDAY:
                 dia= "Qui";
                 break;
-            case 6:
+            case Calendar.FRIDAY:
                 dia= "Sex";
                 break;
-            case 7:
+            case Calendar.SATURDAY:
                 dia= "Sab";
                 break;
         }
         return dia;
+    }
+
+    public static Calendar getDif(long difMilli) {
+        int timeInSeconds = (int) difMilli / 1000;
+        int hours, minutes, seconds;
+        hours = timeInSeconds / 3600;
+        timeInSeconds = timeInSeconds - (hours * 3600);
+        minutes = timeInSeconds / 60;
+        timeInSeconds = timeInSeconds - (minutes * 60);
+        seconds = timeInSeconds;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.SECOND, seconds);
+
+        calendar.add(Calendar.HOUR_OF_DAY, hours);
+        calendar.add(Calendar.MINUTE, minutes);
+        calendar.add(Calendar.SECOND, seconds);
+
+        return calendar;
     }
 }
