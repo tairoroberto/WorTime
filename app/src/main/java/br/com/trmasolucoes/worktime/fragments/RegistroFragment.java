@@ -128,7 +128,7 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
 
     @Override
     public void onClickListener(View view, int position) {
-        Toast.makeText(getActivity(), "Posição: " + position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Posição: " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
