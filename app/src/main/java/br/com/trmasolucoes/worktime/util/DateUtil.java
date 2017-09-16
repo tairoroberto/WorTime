@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Created by tairo on 28/03/15.
@@ -90,6 +91,21 @@ public class DateUtil {
 
     public static Date getStringToDate(String date){
         Date data = null;
+
+        DateFormat formatador = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            data = (Date) formatador.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    public static Date getStringToDateDataBase(String date){
+        Date data = null;
+
+        if (date == null)
+            return null;
 
         DateFormat formatador = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -301,5 +317,52 @@ public class DateUtil {
         calendar.add(Calendar.SECOND, seconds);
 
         return calendar;
+    }
+
+    public static String dateToString(Date date) {
+        return dateToString(date, "yyyy-MM-dd HH:mm:ss");
+    }
+
+    public static String dateToStringMinuteHour(Date date) {
+        return dateToString(date, "HH:mm");
+    }
+
+    private static String dateToString(Date date, String format) {
+
+        if (date == null)
+            return null;
+
+        SimpleDateFormat customFormat = new SimpleDateFormat(format, new Locale("pt", "BR"));
+        customFormat.setLenient(false);
+        return customFormat.format(date);
+    }
+
+    public static Date stringToDateTime(String value) {
+        return stringToDateTime(value, "yyyy-MM-dd HH:mm:ss");
+    }
+
+    private static Date stringToDateTime(String value, String format) {
+        try {
+            return new SimpleDateFormat(format).parse(value);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return Calendar.getInstance().getTime();
+        }
+    }
+
+    private static long getHora(long tempo) {
+        return (long) (((((double) tempo) / 60.0d) / 60.0d) / 1000.0d);
+    }
+
+    private static long getMinuto(long tempo) {
+        return Math.round(((((((double) tempo) / 60.0d) / 60.0d) / 1000.0d) - ((double) getHora(tempo))) * 60.0d);
+    }
+
+    public static String getHoraStr(long tempo) {
+        return String.format("%02d", new Object[]{Long.valueOf(getHora(tempo))});
+    }
+
+    public static String getMinutoStr(long tempo) {
+        return String.format("%02d", new Object[]{Long.valueOf(getMinuto(tempo))});
     }
 }

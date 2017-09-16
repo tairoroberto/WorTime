@@ -14,8 +14,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.trmasolucoes.worktime.R;
 import br.com.trmasolucoes.worktime.adapters.RegistroAdapter;
@@ -202,12 +206,19 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
         float saida = 0;
         float total = 0;
 
+        Date entradaDate = null;
+        Date almocoDate = null;
+        Date almocoRetornoDate = null;
+        Date saidaDate = null;
+        Date totalDate = null;
+
         float entradaConfig = 0;
         float almocoConfig = 0;
         float almocoRetornoConfig = 0;
         float saidaConfig = 0;
-        float totalConfig = 0;
-        float sugestao = 0;
+        float intervaloAlomocoConfig = 0;
+        long totalConfig = 0;
+        long sugestao = 0;
         float saldo = 0;
         ArrayList<Horario> horarios;
 
@@ -221,15 +232,19 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
             switch (registro.getTipo()) {
                 case "entrada" :
                     entrada = getHorarioFloat(hora[0] +":"+ hora[1]);
+                    entradaDate = registro.getHorario();
                     break;
                 case "almoco" :
                     almoco = getHorarioFloat(hora[0] +":"+ hora[1]);
+                    almocoDate = registro.getHorario();
                     break;
                 case "almoco_retorno" :
                     almocoRetorno = getHorarioFloat(hora[0] +":"+ hora[1]);
+                    almocoRetornoDate = registro.getHorario();
                     break;
                 case "saida" :
                     saida = getHorarioFloat(hora[0] +":"+ hora[1]);
+                    saidaDate = registro.getHorario();
                     break;
             }
         }
@@ -242,24 +257,46 @@ public class RegistroFragment extends Fragment implements RecyclerViewOnClickLis
                 almocoConfig = getHorarioFloat(horario.getAlmoco());
                 almocoRetornoConfig = getHorarioFloat(horario.getAlmocoRetorno());
                 saidaConfig = getHorarioFloat(horario.getSaida());
-                totalConfig = (saidaConfig - almocoRetornoConfig) + (almocoConfig - entradaConfig);
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+
+                if (entradaConfig > 0 && almocoConfig > 0 && almocoRetornoConfig > 0 && saidaConfig > 0){
+                    totalConfig = (long) ((saidaConfig - almocoRetornoConfig) + (almocoConfig - entradaConfig));
+                }
             }
         }
+
+        long diff1 = 0;
+        if (almocoDate != null && entradaDate != null) {
+            diff1 = almocoDate.getTime() - entradaDate.getTime();
+        }
+
+        if (almocoRetornoDate != null && almocoDate != null) {
+            long diff = almocoRetornoDate.getTime() - almocoDate.getTime();
+
+            sugestao = (totalConfig - diff1) + almocoRetornoDate.getTime();
+        }
+
 
         if (entrada > 0 && almoco > 0 && almocoRetorno > 0 && saida > 0){
             saldo = (saida - almocoRetorno) + (almoco - entrada);
 
         }else if (entrada > 0 && almoco > 0 && almocoRetorno > 0){
-            float total1 = (almoco - entrada);
+            /*float total1 = (almoco - entrada);
             float total2 = (totalConfig - total1);
-            sugestao = almocoRetorno + total2;
+            sugestao = almocoRetorno + total2;*/
+            txtPrevisaoSaida.setText(new SimpleDateFormat("HH:mm", new Locale("pt", "BR")).format(sugestao));
 
         }else {
             sugestao = 0;
             saldo = 0;
         }
 
-        txtPrevisaoSaida.setText(String.valueOf(getFloatHorario(sugestao)));
+
         txtSaldoHorasDia.setText(String.valueOf(getFloatHorario(saldo)));
     }
 
